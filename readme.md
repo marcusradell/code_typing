@@ -71,3 +71,16 @@ Add `build/` to .gitignore.
 Check `http://localhost:3000.
 
 Commit!
+
+## I want to document the commands as npm scripts
+
+_Done when `npm run build && npm start` works (check web page)._
+
+In `package.json` replace the content in `"script"` with:
+
+```
+    "build": "tsc",
+    "start": "node build"
+```
+
+Check and commit!
