@@ -1,0 +1,23 @@
+{
+  "name": "lab_ts_backend",
+  "version": "1.0.0",
+  "description": "In preparation for a live coding session.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcusradell/lab_ts_backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcusradell/lab_ts_backend/issues"
+  },
+  "homepage": "https://github.com/marcusradell/lab_ts_backend#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
