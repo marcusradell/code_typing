@@ -48,3 +48,26 @@ app.listen(port, () => {
 `node src`
 
 Check your browser for `Hello World!` when visiting `http:localhost:3000`.
+
+Commit the code.
+
+## I want to use TypeScript
+
+_Done when I have compiled the code using `tsc`, then run `node build, then check the browser._
+
+Rename file into `src/index.ts`.
+Use quick fix `cmd+.` to convert require into an import.
+Use quick fix to install types for express.
+
+`npm i -D typescript` to install typescript and the binary `tsc`.
+`npx tsc --init` to create a `tsconfig.json` file.
+Configure `tsconfig.json` with `"rootDir": "./src"` and `"outDir": "./build"`.
+
+`npx tsc`
+Make sure it outputs a file with javascript into `build/index.js`.
+Add `build/` to .gitignore.
+
+`node build`
+Check `http://localhost:3000.
+
+Commit!
