@@ -91,7 +91,7 @@ _Done when `docker build -t lab_ts_backend . && docker run -p 3000:3000 --rm -it
 
 Search for `node.js dockerfile`. I got to https://nodejs.org/en/docs/guides/nodejs-docker-webapp.
 
-Modify the content so it becomes:
+Modify the content of `Dockerfile` so it becomes:
 
 ```
 FROM node:19
@@ -111,3 +111,27 @@ Move any `devDependencies` to `dependencies`. This can be undone with a more adv
 Try and see if everything works.
 
 Commit!
+
+## I want to use GCP Cloud Run to host the backend
+
+_Done when I can visit a Cloud Run URL that hosts the latest version of my app._
+
+Login to GCP and create a new project named `lab-ts-backend`.
+
+Search for `Cloud Run` and create a new service.
+
+Choose option `Continuously deploy new revisions from a source repository`.
+Service name: `app`.
+Region: `europe-north1`.
+Max instances: `1`.
+Authentication: `Allow unauthenticated invocations`.
+Container port (under a submenu): `3000`.
+
+Scroll back up and click on `Set up cloud build`.
+Choose `GitHub` as the provider and authenticate.
+Choose `lab_ts_backend` as the repository.
+Create the Cloud Build.
+
+Create the service.
+
+Check results and commit!
