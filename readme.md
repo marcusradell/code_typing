@@ -135,3 +135,17 @@ Create the Cloud Build.
 Create the service.
 
 Check results and commit!
+
+## I want to serve a list of programming speed typing challenges
+
+_Done when `curl https://app-6dsti55tsa-lz.a.run.app/challenge/list` returns [{name: "Hello world!"}] in its body as JSON._
+
+Add a new route to the app:
+
+```
+app.get("/challenge/list", (req, res) => {
+  res.json([{ name: "Hello World!" }]);
+});
+```
+
+Verify locally, push to prod, and verify in prod.

@@ -6,6 +6,10 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+app.get("/challenge/list", (req, res) => {
+  res.json([{ name: "Hello World!" }]);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
