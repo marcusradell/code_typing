@@ -59,7 +59,7 @@ Rename file into `src/index.ts`.
 Use quick fix `cmd+.` to convert require into an import.
 Use quick fix to install types for express.
 
-`npm i -D typescript` to install typescript and the binary `tsc`.
+`npm i typescript` to install typescript and the binary `tsc`.
 `npx tsc --init` to create a `tsconfig.json` file.
 Configure `tsconfig.json` with `"rootDir": "./src"` and `"outDir": "./build"`.
 
@@ -84,3 +84,30 @@ In `package.json` replace the content in `"script"` with:
 ```
 
 Check and commit!
+
+## I want to host the code using containerization
+
+_Done when `docker build -t lab_ts_backend . && docker run -p 3000:3000 --rm -it lab_ts_backend` works and you can visit the web site._
+
+Search for `node.js dockerfile`. I got to https://nodejs.org/en/docs/guides/nodejs-docker-webapp.
+
+Modify the content so it becomes:
+
+```
+FROM node:19
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD [ "node", "build/" ]
+```
+
+Add a `.dockerignore` with `build/` and `node_modules/`.
+
+Move any `devDependencies` to `dependencies`. This can be undone with a more advanced dockerfile setup.
+
+Try and see if everything works.
+
+Commit!
