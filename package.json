@@ -13,7 +13,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/marcusradell/lab_ts_backend/issues"
   },
@@ -24,7 +24,6 @@
     "express": "^4.18.2",
     "typescript": "^4.9.5",
     "uuid": "^9.0.0"
-    
   },
   "devDependencies": {}
 }
