@@ -164,7 +164,7 @@ app.post("/challenge/add", (req, res) => {
 
 Test and commit!
 
-_Skipping instructions as it gets pretty standard CRUD as the previous steps._
+_Skipping some instructions for brevity._
 
 ## I want to be able to get a challenge by ID
 
@@ -173,3 +173,11 @@ curl "localhost:3000/challenge/display?id=6e2929e1-f1b4-460c-ad7f-c5c77ed1b32d" 
 ```
 
 ## I want to be able to remove a challenge
+
+Add the endpoint and filter challenges on ID to remove the specific challenge. That means that we need to add IDs for challenges.
+
+Install `uuid @types/uuid` and use `v4` to generate new UUIDs.
+
+```
+curl "localhost:3000/challenge/remove" -v -d '{"id": "6e2929e1-f1b4-460c-ad7f-c5c77ed1b32d"}' -H "Content-Type: application/json"
+```

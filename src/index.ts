@@ -8,7 +8,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-const challenges: { id: string; name: string }[] = [
+let challenges: { id: string; name: string }[] = [
   { id: "6e2929e1-f1b4-460c-ad7f-c5c77ed1b32d", name: "Hello World!" },
 ];
 
@@ -31,6 +31,15 @@ app.get("/challenge/display", (req, res) => {
 app.post("/challenge/add", (req, res) => {
   const { name } = req.body;
   challenges.push({ name, id: v4() });
+  res.sendStatus(200);
+});
+
+app.post("/challenge/remove", (req, res) => {
+  const { id } = req.body;
+
+  if (!id) return res.sendStatus(400);
+
+  challenges = challenges.filter((challenge) => challenge.id !== id);
   res.sendStatus(200);
 });
 
