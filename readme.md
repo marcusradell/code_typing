@@ -161,3 +161,15 @@ app.post("/challenge/add", (req, res) => {
   res.sendStatus(200);
 });
 ```
+
+Test and commit!
+
+_Skipping instructions as it gets pretty standard CRUD as the previous steps._
+
+## I want to be able to get a challenge by ID
+
+```
+curl "localhost:3000/challenge/display?id=6e2929e1-f1b4-460c-ad7f-c5c77ed1b32d" -v
+```
+
+## I want to be able to remove a challenge
