@@ -149,3 +149,15 @@ app.get("/challenge/list", (req, res) => {
 ```
 
 Verify locally, push to prod, and verify in prod.
+
+## I want to be able to add a new challenge
+
+_Done when `curl localhost:3000/challenge/add -d '{"name": "Fizzbuzz"}' -H "Content-Type: application/json" -v` returns status code 200 and the list endpoint shows the new challenge._
+
+```
+app.post("/challenge/add", (req, res) => {
+  const { name } = req.body;
+  challenges.push({ name });
+  res.sendStatus(200);
+});
+```
