@@ -30,7 +30,7 @@ app.get("/challenge/display", (req, res) => {
 
 app.post("/challenge/add", (req, res) => {
   const { name } = req.body;
-  challenges.push({ name, id: v4() });
+  challenges.push({ id: v4(), name });
   res.sendStatus(200);
 });
 
