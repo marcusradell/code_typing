@@ -1,3 +1,11 @@
-import { app } from "./app";
+import { App } from "./app";
 
-app();
+const port = 3000;
+
+const main = () => {
+  App().listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+};
+
+main();

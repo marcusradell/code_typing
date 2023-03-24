@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import { v4 } from "uuid";
 
-export const app = () => {
+export const App = () => {
   const app = express();
 
   app.use(express.json());
@@ -50,9 +50,5 @@ export const app = () => {
     res.sendStatus(200);
   });
 
-  const port = 3000;
-
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-  });
+  return app;
 };
