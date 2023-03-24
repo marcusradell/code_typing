@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { Express } from "express";
 import { ChallengeService } from "./challenge_service";
 
