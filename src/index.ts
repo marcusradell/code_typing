@@ -1,45 +1,46 @@
+import { PrismaClient } from "@prisma/client";
 import express from "express";
 import { v4 } from "uuid";
 const app = express();
 const port = 3000;
 app.use(express.json());
 
+const prismaClient = new PrismaClient();
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-let challenges: { id: string; name: string }[] = [
-  { id: "6e2929e1-f1b4-460c-ad7f-c5c77ed1b32d", name: "Hello World!" },
-];
-
-app.get("/challenge/list", (req, res) => {
-  res.json(challenges);
+app.get("/challenge/list", async (req, res) => {
+  res.json(await prismaClient.challangeRow.findMany());
 });
 
-app.get("/challenge/display", (req, res) => {
+app.get("/challenge/display", async (req, res) => {
   const id = req.query.id;
 
-  if (!id) return res.sendStatus(400);
+  if (!id || typeof id !== "string") return res.sendStatus(400);
 
-  const challenge = challenges.find((challenge) => challenge.id === id);
+  const challenge = await prismaClient.challangeRow.findUnique({
+    where: { id },
+  });
 
   if (!challenge) return res.sendStatus(400);
 
   res.json(challenge);
 });
 
-app.post("/challenge/add", (req, res) => {
+app.post("/challenge/add", async (req, res) => {
   const { name } = req.body;
-  challenges.push({ id: v4(), name });
+  await prismaClient.challangeRow.create({ data: { id: v4(), name } });
   res.sendStatus(200);
 });
 
-app.post("/challenge/remove", (req, res) => {
+app.post("/challenge/remove", async (req, res) => {
   const { id } = req.body;
 
   if (!id) return res.sendStatus(400);
 
-  challenges = challenges.filter((challenge) => challenge.id !== id);
+  await prismaClient.challangeRow.delete({ where: id });
   res.sendStatus(200);
 });
 

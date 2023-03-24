@@ -11,6 +11,6 @@ datasource db {
 }
 
 model ChallangeRow {
-  id    String @id
-  email String @unique
+  id   String @id
+  name String @unique
 }
