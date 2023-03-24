@@ -18,9 +18,9 @@ export const app = () => {
   });
 
   app.get("/challenge/display", async (req, res) => {
-    const id = req.query.id;
+    const id = req.query.id as unknown;
 
-    if (!id || typeof id !== "string") return res.sendStatus(400);
+    if (typeof id !== "string") return res.sendStatus(400);
 
     const challenge = await prismaClient.challangeRow.findUnique({
       where: { id },
@@ -32,17 +32,21 @@ export const app = () => {
   });
 
   app.post("/challenge/add", async (req, res) => {
-    const { name } = req.body;
+    const name = req.body.name as unknown;
+
+    if (typeof name !== "string") {
+      return res.sendStatus(400);
+    }
     await prismaClient.challangeRow.create({ data: { id: v4(), name } });
     res.sendStatus(200);
   });
 
   app.post("/challenge/remove", async (req, res) => {
-    const { id } = req.body;
+    const id = req.body.id as unknown;
 
-    if (!id) return res.sendStatus(400);
+    if (typeof id !== "string") return res.sendStatus(400);
 
-    await prismaClient.challangeRow.delete({ where: id });
+    await prismaClient.challangeRow.delete({ where: { id } });
     res.sendStatus(200);
   });
 
