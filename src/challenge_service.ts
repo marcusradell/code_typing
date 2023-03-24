@@ -1,8 +1,11 @@
 import { ChallangeRow, PrismaClient } from "@prisma/client";
 import { v4 } from "uuid";
+import { ChallengeRepository } from "./challenge_repository";
 import { ValidationError } from "./validation_error";
 
 export const ChallengeService = (
+  challengeRepository: ChallengeRepository,
+  // TODO: remove completely.
   prismaClient: PrismaClient
 ): ChallengeService => {
   return {
@@ -36,9 +39,9 @@ export const ChallengeService = (
         level = 2;
       }
 
-      await prismaClient.challangeRow.create({
-        data: { id: v4(), name, content, level },
-      });
+      const data = { id: v4(), name, content, level };
+
+      await challengeRepository.add(data);
     },
     remove: async (id) => {
       if (typeof id !== "string") {

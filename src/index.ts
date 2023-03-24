@@ -2,7 +2,8 @@ import { App } from "./app";
 
 import { PrismaClient } from "@prisma/client";
 import express from "express";
-import { ChallengeController } from "./challange_controller";
+import { ChallengeController } from "./challenge_controller";
+import { ChallengeRepository } from "./challenge_repository";
 import { ChallengeService } from "./challenge_service";
 const app = express();
 const port = 3000;
@@ -20,7 +21,8 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-const challengeService = ChallengeService(prismaClient);
+const challengeRepository = ChallengeRepository(prismaClient);
+const challengeService = ChallengeService(challengeRepository, prismaClient);
 
 ChallengeController(app, challengeService);
 
