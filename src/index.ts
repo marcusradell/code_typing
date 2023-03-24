@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 const challengeService = ChallengeService(prismaClient);
 
-ChallengeController(app, prismaClient, challengeService);
+ChallengeController(app, challengeService);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

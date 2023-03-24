@@ -4,7 +4,6 @@ import { ChallengeService } from "./challenge_service";
 
 export const ChallengeController = (
   app: Express,
-  prismaClient: PrismaClient,
   challengeService: ChallengeService
 ) => {
   app.get("/challenge", async (req, res) => {
