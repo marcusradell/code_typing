@@ -7,23 +7,27 @@ export const ChallengeController = (
   challengeService: ChallengeService
 ) => {
   app.get("/challenge", async (req, res) => {
-    res.json(await challengeService.list());
+    const challenges = await challengeService.list();
+
+    res.json(challenges);
   });
 
   app.get("/challenge/[id]", async (req, res) => {
     const id = req.query.id;
 
-    if (!id || typeof id !== "string") return res.sendStatus(400);
+    try {
+      const challenge = await challengeService.display(id);
 
-    const challenge = await challengeService.display(id);
-
-    if (!challenge) return res.sendStatus(400);
-
-    res.json(challenge);
+      res.json(challenge);
+    } catch (error) {
+      return res.sendStatus(400);
+    }
   });
 
   app.post("/challenge", async (req, res) => {
     const { name } = req.body;
+
+    // type check as string
 
     await challengeService.add(name);
 

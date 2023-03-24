@@ -1,5 +1,6 @@
 import { ChallangeRow, PrismaClient } from "@prisma/client";
 import { v4 } from "uuid";
+import { ValidationError } from "./validation_error";
 
 export const ChallengeService = (
   prismaClient: PrismaClient
@@ -9,9 +10,17 @@ export const ChallengeService = (
       return await prismaClient.challangeRow.findMany();
     },
     display: async (id) => {
+      if (!id || typeof id !== "string") {
+        throw new ValidationError();
+      }
+
       const challenge = await prismaClient.challangeRow.findUnique({
         where: { id },
       });
+
+      if (!challenge) {
+        throw new ValidationError();
+      }
 
       return challenge;
     },
@@ -26,7 +35,7 @@ export const ChallengeService = (
 
 type List = () => Promise<ChallangeRow[]>;
 
-type Display = (id: string) => Promise<ChallangeRow | null>;
+type Display = (id: unknown) => Promise<ChallangeRow | null>;
 
 type Add = (name: string) => Promise<void>;
 
