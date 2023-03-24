@@ -181,3 +181,28 @@ Install `uuid @types/uuid` and use `v4` to generate new UUIDs.
 ```
 curl "localhost:3000/challenge/remove" -v -d '{"id": "6e2929e1-f1b4-460c-ad7f-c5c77ed1b32d"}' -H "Content-Type: application/json"
 ```
+
+## I want to setup Prisma with Postgres
+
+Add a script for running Postgres via Docker in `package.json`.
+
+Place a matching `.env.example` entry for the connection string.
+
+Run `npx prisma init`.
+
+Replace the `.env` `DATABASE_URL` value with your `.env.example` value (the key should be the same for both).
+
+`.gitignore` `.env`.
+
+`prisma/schema.prisma` should contain the following model:
+
+```
+model ChallangeRow {
+  id    String @id
+  email String @unique
+}
+```
+
+Run `npx prisma migrate dev` to create and apply migrations and update the prisma client.
+
+_TODO: Add pitch! Spela in en egen promo med datum och pitch!_
