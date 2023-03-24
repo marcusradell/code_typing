@@ -40,7 +40,7 @@ export const App = () => {
     res.sendStatus(200);
   });
 
-  app.post("/challenge/remove/:id", async (req, res) => {
+  app.delete("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
 
     if (typeof id !== "string") return res.sendStatus(400);
