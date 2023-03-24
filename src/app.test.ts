@@ -10,9 +10,12 @@ test("Server is running", async () => {
 test("Add, list, get by ID, remove, and list", async () => {
   const app = request(App());
 
-  const postResponse = await app
-    .post("/api/challenges")
-    .send({ name: "Roman Numerals" });
+  const data = {
+    name: "Roman Numerals",
+    content: `if(number < 1) throw new Error("Roman numerals doesn't support 0 or negative numbers.);`,
+  };
+
+  const postResponse = await app.post("/api/challenges").send(data);
 
   expect(postResponse.status).toEqual(200);
 
@@ -23,7 +26,7 @@ test("Add, list, get by ID, remove, and list", async () => {
   });
 
   expect(getAllResponse.status).toEqual(200);
-  expect(testableBody).toEqual([{ name: "Roman Numerals" }]);
+  expect(testableBody).toEqual([{ ...data, level: 1 }]);
 
   const challengeId = getAllResponse.body[0].id;
 
@@ -32,7 +35,8 @@ test("Add, list, get by ID, remove, and list", async () => {
   expect(getByIdResponse.status).toEqual(200);
   expect(getByIdResponse.body).toEqual({
     id: challengeId,
-    name: "Roman Numerals",
+    ...data,
+    level: 1,
   });
 
   const deleteResponse = await app.delete(`/api/challenges/${challengeId}`);

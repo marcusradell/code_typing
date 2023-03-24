@@ -36,7 +36,15 @@ export const App = () => {
       return res.sendStatus(400);
     }
 
-    const level = 1;
+    const today = new Date();
+    const MONDAY = 1;
+    let level = 1;
+
+    if (content.length > 100 && content.includes(";")) {
+      level = 3;
+    } else if (today.getDay() === MONDAY) {
+      level = 2;
+    }
 
     await prismaClient.challangeRow.create({
       data: { id: v4(), name, content, level },
