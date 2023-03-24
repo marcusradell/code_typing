@@ -7,11 +7,11 @@ export const ChallengeController = (
   prismaClient: PrismaClient,
   challengeService: ChallengeService
 ) => {
-  app.get("/challenge/list", async (req, res) => {
+  app.get("/challenge", async (req, res) => {
     res.json(await challengeService.list());
   });
 
-  app.get("/challenge/display", async (req, res) => {
+  app.get("/challenge/[id]", async (req, res) => {
     const id = req.query.id;
 
     if (!id || typeof id !== "string") return res.sendStatus(400);
@@ -23,7 +23,7 @@ export const ChallengeController = (
     res.json(challenge);
   });
 
-  app.post("/challenge/add", async (req, res) => {
+  app.post("/challenge", async (req, res) => {
     const { name } = req.body;
 
     await challengeService.add(name);
@@ -31,7 +31,7 @@ export const ChallengeController = (
     res.sendStatus(200);
   });
 
-  app.post("/challenge/remove", async (req, res) => {
+  app.delete("/challenge", async (req, res) => {
     const { id } = req.body;
 
     if (!id) return res.sendStatus(400);
