@@ -31,7 +31,7 @@ export const ChallengeService = (
       const content = "abc;";
       let level = 1;
       const today = new Date();
-      const MONDAY = 0;
+      const MONDAY = 1;
 
       if (content.length > 100 && content.includes(";")) {
         level = 3;
