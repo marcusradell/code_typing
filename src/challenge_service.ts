@@ -1,4 +1,5 @@
 import { ChallangeRow, PrismaClient } from "@prisma/client";
+import { v4 } from "uuid";
 
 export const ChallengeService = (
   prismaClient: PrismaClient
@@ -14,6 +15,9 @@ export const ChallengeService = (
 
       return challenge;
     },
+    add: async (name) => {
+      await prismaClient.challangeRow.create({ data: { id: v4(), name } });
+    },
   };
 };
 
@@ -21,7 +25,10 @@ type List = () => Promise<ChallangeRow[]>;
 
 type Display = (id: string) => Promise<ChallangeRow | null>;
 
+type Add = (name: string) => Promise<void>;
+
 export type ChallengeService = {
   list: List;
   display: Display;
+  add: Add;
 };

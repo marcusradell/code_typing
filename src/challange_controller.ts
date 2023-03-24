@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { Express } from "express";
-import { v4 } from "uuid";
 import { ChallengeService } from "./challenge_service";
 
 export const ChallengeController = (
@@ -26,7 +25,9 @@ export const ChallengeController = (
 
   app.post("/challenge/add", async (req, res) => {
     const { name } = req.body;
-    await prismaClient.challangeRow.create({ data: { id: v4(), name } });
+
+    await challengeService.add(name);
+
     res.sendStatus(200);
   });
 
