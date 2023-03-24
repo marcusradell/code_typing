@@ -30,12 +30,17 @@ export const App = () => {
   });
 
   app.post("/api/challenges", async (req, res) => {
-    const name = req.body.name as unknown;
+    const { name, content } = req.body;
 
-    if (typeof name !== "string") {
+    if (typeof name !== "string" || typeof content !== "string") {
       return res.sendStatus(400);
     }
-    await prismaClient.challangeRow.create({ data: { id: v4(), name } });
+
+    const level = 1;
+
+    await prismaClient.challangeRow.create({
+      data: { id: v4(), name, content, level },
+    });
 
     res.sendStatus(200);
   });
