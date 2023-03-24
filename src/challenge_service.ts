@@ -25,7 +25,20 @@ export const ChallengeService = (
       return challenge;
     },
     add: async (name) => {
-      await prismaClient.challangeRow.create({ data: { id: v4(), name } });
+      const content = "abc;";
+      let level = 1;
+      const today = new Date();
+      const MONDAY = 0;
+
+      if (content.length > 100 && content.includes(";")) {
+        level = 3;
+      } else if (today.getDay() === MONDAY) {
+        level = 2;
+      }
+
+      await prismaClient.challangeRow.create({
+        data: { id: v4(), name, content, level },
+      });
     },
     remove: async (id) => {
       if (typeof id !== "string") {
