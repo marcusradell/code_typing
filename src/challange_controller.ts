@@ -36,7 +36,8 @@ export const ChallengeController = (
 
     if (!id) return res.sendStatus(400);
 
-    await prismaClient.challangeRow.delete({ where: id });
+    await challengeService.remove(id);
+
     res.sendStatus(200);
   });
 };

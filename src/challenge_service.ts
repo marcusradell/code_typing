@@ -18,6 +18,9 @@ export const ChallengeService = (
     add: async (name) => {
       await prismaClient.challangeRow.create({ data: { id: v4(), name } });
     },
+    remove: async (id) => {
+      await prismaClient.challangeRow.delete({ where: { id } });
+    },
   };
 };
 
@@ -27,8 +30,11 @@ type Display = (id: string) => Promise<ChallangeRow | null>;
 
 type Add = (name: string) => Promise<void>;
 
+type Remove = (id: string) => Promise<void>;
+
 export type ChallengeService = {
   list: List;
   display: Display;
   add: Add;
+  remove: Remove;
 };
