@@ -28,6 +28,10 @@ export const ChallengeService = (
       await prismaClient.challangeRow.create({ data: { id: v4(), name } });
     },
     remove: async (id) => {
+      if (typeof id !== "string") {
+        throw new ValidationError();
+      }
+
       await prismaClient.challangeRow.delete({ where: { id } });
     },
   };
@@ -39,7 +43,7 @@ type Display = (id: unknown) => Promise<ChallangeRow | null>;
 
 type Add = (name: string) => Promise<void>;
 
-type Remove = (id: string) => Promise<void>;
+type Remove = (id: unknown) => Promise<void>;
 
 export type ChallengeService = {
   list: List;

@@ -37,10 +37,12 @@ export const ChallengeController = (
   app.delete("/challenge", async (req, res) => {
     const { id } = req.body;
 
-    if (!id) return res.sendStatus(400);
+    try {
+      await challengeService.remove(id);
 
-    await challengeService.remove(id);
-
-    res.sendStatus(200);
+      res.sendStatus(200);
+    } catch (error) {
+      res.sendStatus(400);
+    }
   });
 };
