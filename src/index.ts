@@ -2,7 +2,8 @@ import { App } from "./app";
 
 import { PrismaClient } from "@prisma/client";
 import express from "express";
-import { createChallengeController } from "./challange_controller";
+import { ChallengeController } from "./challange_controller";
+import { ChallengeService } from "./challenge_service";
 const app = express();
 const port = 3000;
 
@@ -19,7 +20,9 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-createChallengeController(app, prismaClient);
+const challengeService = ChallengeService(prismaClient);
+
+ChallengeController(app, prismaClient, challengeService);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

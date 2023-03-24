@@ -1,13 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { Express } from "express";
 import { v4 } from "uuid";
+import { ChallengeService } from "./challenge_service";
 
-export const createChallengeController = (
+export const ChallengeController = (
   app: Express,
-  prismaClient: PrismaClient
+  prismaClient: PrismaClient,
+  challengeService: ChallengeService
 ) => {
   app.get("/challenge/list", async (req, res) => {
-    res.json(await prismaClient.challangeRow.findMany());
+    res.json(await challengeService.list());
   });
 
   app.get("/challenge/display", async (req, res) => {
