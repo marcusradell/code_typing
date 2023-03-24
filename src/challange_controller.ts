@@ -17,9 +17,7 @@ export const ChallengeController = (
 
     if (!id || typeof id !== "string") return res.sendStatus(400);
 
-    const challenge = await prismaClient.challangeRow.findUnique({
-      where: { id },
-    });
+    const challenge = await challengeService.display(id);
 
     if (!challenge) return res.sendStatus(400);
 
