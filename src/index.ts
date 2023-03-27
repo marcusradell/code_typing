@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import express, { ErrorRequestHandler } from "express";
 import { ChallengeController } from "./challenge_controller";
 import { PrismaChallengeRepository } from "./prisma_challenge_repository";
-import { ChallengeService } from "./challenge_service";
+import { ChallengeServiceImpl } from "./challenge_service";
 import { ValidationError } from "./validation_error";
 import { SystemTimeProvider } from "./system_time_provider";
 const app = express();
@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 
 const challengeRepository = PrismaChallengeRepository(prismaClient);
 const timeProvider = SystemTimeProvider();
-const challengeService = ChallengeService(
+const challengeService = ChallengeServiceImpl(
   challengeRepository,
   prismaClient,
   timeProvider

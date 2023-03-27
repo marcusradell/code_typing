@@ -4,12 +4,12 @@ import { ChallengeRepository } from "./challenge_repository";
 import { TimeProvider } from "./time_provider";
 import { ValidationError } from "./validation_error";
 
-export const ChallengeService = (
+export const ChallengeServiceImpl = (
   challengeRepository: ChallengeRepository,
   // TODO: remove completely.
   prismaClient: PrismaClient,
   timeProvider: TimeProvider
-): ChallengeService => {
+): ChallengeServiceImpl => {
   return {
     list: async () => {
       return await prismaClient.challangeRow.findMany();
@@ -63,7 +63,7 @@ type Add = (name: string) => Promise<void>;
 
 type Remove = (id: unknown) => Promise<void>;
 
-export type ChallengeService = {
+export type ChallengeServiceImpl = {
   list: List;
   display: Display;
   add: Add;
