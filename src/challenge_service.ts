@@ -1,10 +1,10 @@
 import { ChallangeRow, PrismaClient } from "@prisma/client";
 import { v4 } from "uuid";
-import { PrismaChallengeRepository } from "./prisma_challenge_repository";
+import { ChallengeRepository } from "./challenge_repository";
 import { ValidationError } from "./validation_error";
 
 export const ChallengeService = (
-  challengeRepository: PrismaChallengeRepository,
+  challengeRepository: ChallengeRepository,
   // TODO: remove completely.
   prismaClient: PrismaClient
 ): ChallengeService => {
