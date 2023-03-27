@@ -6,6 +6,7 @@ import { ChallengeController } from "./challenge_controller";
 import { PrismaChallengeRepository } from "./prisma_challenge_repository";
 import { ChallengeService } from "./challenge_service";
 import { ValidationError } from "./validation_error";
+import { SystemTimeProvider } from "./system_time_provider";
 const app = express();
 const port = 3000;
 
@@ -23,7 +24,12 @@ app.get("/", (req, res) => {
 });
 
 const challengeRepository = PrismaChallengeRepository(prismaClient);
-const challengeService = ChallengeService(challengeRepository, prismaClient);
+const timeProvider = SystemTimeProvider();
+const challengeService = ChallengeService(
+  challengeRepository,
+  prismaClient,
+  timeProvider
+);
 
 ChallengeController(app, challengeService);
 

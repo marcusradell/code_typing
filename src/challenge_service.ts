@@ -1,12 +1,14 @@
 import { ChallangeRow, PrismaClient } from "@prisma/client";
 import { v4 } from "uuid";
 import { ChallengeRepository } from "./challenge_repository";
+import { TimeProvider } from "./time_provider";
 import { ValidationError } from "./validation_error";
 
 export const ChallengeService = (
   challengeRepository: ChallengeRepository,
   // TODO: remove completely.
-  prismaClient: PrismaClient
+  prismaClient: PrismaClient,
+  timeProvider: TimeProvider
 ): ChallengeService => {
   return {
     list: async () => {
@@ -30,7 +32,7 @@ export const ChallengeService = (
     add: async (name) => {
       const content = "abc;";
       let level = 1;
-      const today = new Date();
+      const today = timeProvider.now();
       const MONDAY = 1;
 
       if (content.length > 100 && content.includes(";")) {
