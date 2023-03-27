@@ -2,11 +2,11 @@ import { App } from "./app";
 
 import { PrismaClient } from "@prisma/client";
 import express, { ErrorRequestHandler } from "express";
-import { ChallengeController } from "./challenge_controller";
-import { PrismaChallengeRepository } from "./prisma_challenge_repository";
-import { ChallengeServiceImpl } from "./challenge_service_impl";
+import { ChallengeController } from "./adapters/challenge_controller";
+import { PrismaChallengeRepository } from "./adapters/prisma_challenge_repository";
+import { ChallengeServiceImpl } from "./core/challenge_service_impl";
 import { ValidationError } from "./validation_error";
-import { SystemTimeProvider } from "./system_time_provider";
+import { SystemTimeProvider } from "./adapters/system_time_provider";
 const app = express();
 const port = 3000;
 

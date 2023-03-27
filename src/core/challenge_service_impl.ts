@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import { ChallengeRepository } from "./challenge_repository";
 import { ChallengeService } from "./challenge_service";
 import { TimeProvider } from "./time_provider";
-import { ValidationError } from "./validation_error";
+import { ValidationError } from "../validation_error";
 
 export const ChallengeServiceImpl = (
   challengeRepository: ChallengeRepository,

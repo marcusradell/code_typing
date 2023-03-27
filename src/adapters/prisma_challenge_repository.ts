@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { ChallengeRepository } from "./challenge_repository";
+import { ChallengeRepository } from "../core/challenge_repository";
 
 export const PrismaChallengeRepository = (
   prismaClient: PrismaClient
