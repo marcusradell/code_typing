@@ -3,7 +3,7 @@ import { App } from "./app";
 import { PrismaClient } from "@prisma/client";
 import express, { ErrorRequestHandler } from "express";
 import { ChallengeController } from "./challenge_controller";
-import { ChallengeRepository } from "./challenge_repository";
+import { PrismaChallengeRepository } from "./prisma_challenge_repository";
 import { ChallengeService } from "./challenge_service";
 import { ValidationError } from "./validation_error";
 const app = express();
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.sendStatus(200);
 });
 
-const challengeRepository = ChallengeRepository(prismaClient);
+const challengeRepository = PrismaChallengeRepository(prismaClient);
 const challengeService = ChallengeService(challengeRepository, prismaClient);
 
 ChallengeController(app, challengeService);

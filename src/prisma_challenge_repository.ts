@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 
-export const ChallengeRepository = (
+export const PrismaChallengeRepository = (
   prismaClient: PrismaClient
-): ChallengeRepository => {
+): PrismaChallengeRepository => {
   return {
     // We should have add, remove, getById, getAll
     add: async (data) => {
@@ -20,4 +20,4 @@ type Add = (data: {
   level: number;
 }) => Promise<void>;
 
-export type ChallengeRepository = { add: Add };
+export type PrismaChallengeRepository = { add: Add };
