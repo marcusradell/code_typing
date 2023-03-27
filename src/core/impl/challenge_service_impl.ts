@@ -1,9 +1,9 @@
 import { ChallangeRow, PrismaClient } from "@prisma/client";
 import { v4 } from "uuid";
-import { ChallengeRepository } from "./challenge_repository";
-import { ChallengeService } from "./challenge_service";
-import { TimeProvider } from "./time_provider";
-import { ValidationError } from "../validation_error";
+import { ValidationError } from "../../validation_error";
+import { ChallengeRepository } from "../ports/driven/challenge_repository";
+import { TimeProvider } from "../ports/driven/time_provider";
+import { ChallengeService } from "../ports/driver/challenge_service";
 
 export const ChallengeServiceImpl = (
   challengeRepository: ChallengeRepository,

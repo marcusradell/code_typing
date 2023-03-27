@@ -1,5 +1,5 @@
 import { Express } from "express";
-import { ChallengeService } from "../core/challenge_service";
+import { ChallengeService } from "../../core/ports/driver/challenge_service";
 
 export const ChallengeController = (
   app: Express,

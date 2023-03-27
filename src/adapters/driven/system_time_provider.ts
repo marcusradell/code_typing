@@ -1,4 +1,4 @@
-import { TimeProvider } from "../core/time_provider";
+import { TimeProvider } from "../../core/ports/driven/time_provider";
 
 export const SystemTimeProvider = (): TimeProvider => {
   return {
