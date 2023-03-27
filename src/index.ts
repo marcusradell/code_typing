@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import express, { ErrorRequestHandler } from "express";
 import { ChallengeController } from "./challenge_controller";
 import { PrismaChallengeRepository } from "./prisma_challenge_repository";
-import { ChallengeServiceImpl } from "./challenge_service";
+import { ChallengeServiceImpl } from "./challenge_service_impl";
 import { ValidationError } from "./validation_error";
 import { SystemTimeProvider } from "./system_time_provider";
 const app = express();
