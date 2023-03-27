@@ -1,6 +1,7 @@
 import { ChallangeRow, PrismaClient } from "@prisma/client";
 import { v4 } from "uuid";
 import { ChallengeRepository } from "./challenge_repository";
+import { ChallengeService } from "./challenge_service";
 import { TimeProvider } from "./time_provider";
 import { ValidationError } from "./validation_error";
 
@@ -9,7 +10,7 @@ export const ChallengeServiceImpl = (
   // TODO: remove completely.
   prismaClient: PrismaClient,
   timeProvider: TimeProvider
-): ChallengeServiceImpl => {
+): ChallengeService => {
   return {
     list: async () => {
       return await prismaClient.challangeRow.findMany();
@@ -53,19 +54,4 @@ export const ChallengeServiceImpl = (
       await prismaClient.challangeRow.delete({ where: { id } });
     },
   };
-};
-
-type List = () => Promise<ChallangeRow[]>;
-
-type Display = (id: unknown) => Promise<ChallangeRow | null>;
-
-type Add = (name: string) => Promise<void>;
-
-type Remove = (id: unknown) => Promise<void>;
-
-export type ChallengeServiceImpl = {
-  list: List;
-  display: Display;
-  add: Add;
-  remove: Remove;
 };

@@ -1,9 +1,9 @@
 import { Express } from "express";
-import { ChallengeServiceImpl } from "./challenge_service_impl";
+import { ChallengeService } from "./challenge_service";
 
 export const ChallengeController = (
   app: Express,
-  challengeService: ChallengeServiceImpl
+  challengeService: ChallengeService
 ) => {
   app.get("/challenge", async (req, res) => {
     const challenges = await challengeService.list();
