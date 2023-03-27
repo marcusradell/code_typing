@@ -21,12 +21,16 @@ test("Add, list, get by ID, remove, and list", async () => {
 
   const getAllResponse = await app.get("/api/challenges");
 
-  const testableBody = getAllResponse.body.map(({ id, ...rest }: any) => {
-    return { ...rest };
-  });
+  // NOTE: We are not asserting the ID nor the level, because the ID is randomly generated
+  // and the level is calculated based on a non-deterministic source (system clock).
+  const testableBody = getAllResponse.body.map(
+    ({ id, level, ...rest }: any) => {
+      return { ...rest };
+    }
+  );
 
   expect(getAllResponse.status).toEqual(200);
-  expect(testableBody).toEqual([{ ...data, level: 1 }]);
+  expect(testableBody).toEqual([{ ...data }]);
 
   const challengeId = getAllResponse.body[0].id;
 
