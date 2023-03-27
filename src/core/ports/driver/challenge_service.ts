@@ -1,4 +1,9 @@
-import { ChallangeRow } from "@prisma/client";
+export type Challenge = {
+  id: string;
+  name: string;
+  content: string;
+  level: number;
+};
 
 export interface ChallengeService {
   list: List;
@@ -7,9 +12,9 @@ export interface ChallengeService {
   remove: Remove;
 }
 
-type List = () => Promise<ChallangeRow[]>;
+type List = () => Promise<Challenge[]>;
 
-type Display = (id: unknown) => Promise<ChallangeRow | null>;
+type Display = (id: unknown) => Promise<Challenge | null>;
 
 type Add = (name: string) => Promise<void>;
 
