@@ -7,7 +7,7 @@ export const PrismaChallengeRepository = (
   return {
     // We should have add, remove, getById, getAll
     add: async (data) => {
-      await prismaClient.challangeRow.create({
+      await prismaClient.challengeRow.create({
         data,
       });
     },

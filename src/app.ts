@@ -1,6 +1,11 @@
 import { PrismaClient } from "@prisma/client";
-import express from "express";
-import { v4 } from "uuid";
+import express, { ErrorRequestHandler } from "express";
+import { IdentityGeneratorProvider } from "./adapters/driven/identity_generator_provider";
+import { PrismaChallengeRepository } from "./adapters/driven/prisma_challenge_repository";
+import { SystemTimeProvider } from "./adapters/driven/system_time_provider";
+import { ChallengeController } from "./adapters/driver/challenge_controller";
+import { ChallengeServiceImpl } from "./core/impl/challenge_service_impl";
+import { ValidationError } from "./validation_error";
 
 export const App = () => {
   const app = express();
@@ -13,54 +18,28 @@ export const App = () => {
     res.sendStatus(200);
   });
 
-  app.get("/api/challenges", async (req, res) => {
-    res.json(await prismaClient.challengeRow.findMany());
-  });
+  const challengeRepository = PrismaChallengeRepository(prismaClient);
+  const timeProvider = SystemTimeProvider();
+  const identityGenerator = IdentityGeneratorProvider();
 
-  app.get("/api/challenges/:id", async (req, res) => {
-    const id = req.params.id;
+  const challengeService = ChallengeServiceImpl(
+    challengeRepository,
+    prismaClient,
+    timeProvider,
+    identityGenerator
+  );
 
-    const challenge = await prismaClient.challengeRow.findUnique({
-      where: { id },
-    });
+  ChallengeController(app, challengeService);
 
-    if (!challenge) return res.sendStatus(400);
-
-    res.json(challenge);
-  });
-
-  app.post("/api/challenges", async (req, res) => {
-    const { name, content } = req.body;
-
-    if (typeof name !== "string" || typeof content !== "string") {
-      return res.sendStatus(400);
+  const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+    if (err instanceof ValidationError) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(500);
     }
+  };
 
-    const today = new Date();
-    const MONDAY = 1;
-    let level = 1;
-
-    if (content.length > 100 && content.includes(";")) {
-      level = 3;
-    } else if (today.getDay() === MONDAY) {
-      level = 2;
-    }
-
-    await prismaClient.challengeRow.create({
-      data: { id: v4(), name, content, level },
-    });
-
-    res.sendStatus(200);
-  });
-
-  app.delete("/api/challenges/:id", async (req, res) => {
-    const id = req.params.id;
-
-    if (typeof id !== "string") return res.sendStatus(400);
-
-    await prismaClient.challengeRow.delete({ where: { id } });
-    res.sendStatus(200);
-  });
+  app.use(errorHandler);
 
   return app;
 };

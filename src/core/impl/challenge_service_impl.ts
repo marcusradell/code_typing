@@ -14,14 +14,14 @@ export const ChallengeServiceImpl = (
 ): ChallengeService => {
   return {
     list: async () => {
-      return await prismaClient.challangeRow.findMany();
+      return await prismaClient.challengeRow.findMany();
     },
     display: async (id) => {
       if (!id || typeof id !== "string") {
         throw new ValidationError();
       }
 
-      const challenge = await prismaClient.challangeRow.findUnique({
+      const challenge = await prismaClient.challengeRow.findUnique({
         where: { id },
       });
 
@@ -52,7 +52,7 @@ export const ChallengeServiceImpl = (
         throw new ValidationError();
       }
 
-      await prismaClient.challangeRow.delete({ where: { id } });
+      await prismaClient.challengeRow.delete({ where: { id } });
     },
   };
 };
