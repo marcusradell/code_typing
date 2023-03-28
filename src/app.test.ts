@@ -52,3 +52,17 @@ test("Add, list, get by ID, remove, and list", async () => {
   expect(getAllEmptyResponse.status).toEqual(200);
   expect(getAllEmptyResponse.body).toEqual([]);
 });
+
+test.skip("Add same name twice fails", async () => {
+  const app = request(App());
+
+  const data = {
+    name: "Keep it DRY",
+    content: "const x = 5; const y = 5;",
+  };
+
+  await app.post("/api/challenges").send(data);
+  const secondAddResponse = await app.post("/api/challenges").send(data);
+
+  expect(secondAddResponse.status).toEqual(400);
+});
