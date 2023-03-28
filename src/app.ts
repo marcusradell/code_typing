@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import { v4 } from "uuid";
+import path from "path";
 
 export const App = () => {
   const app = express();
@@ -9,8 +10,12 @@ export const App = () => {
 
   const prismaClient = new PrismaClient();
 
-  app.get("/", (req, res) => {
+  app.head("/status", (req, res) => {
     res.sendStatus(200);
+  });
+
+  app.get("/", (req, res) => {
+    res.sendFile("postman.json", { root: path.resolve(__dirname, "../") });
   });
 
   app.get("/api/challenges", async (req, res) => {
