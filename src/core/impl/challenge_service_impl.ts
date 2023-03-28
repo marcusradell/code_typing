@@ -1,7 +1,7 @@
-import { ChallangeRow, PrismaClient } from "@prisma/client";
-import { v4 } from "uuid";
+import { PrismaClient } from "@prisma/client";
 import { ValidationError } from "../../validation_error";
 import { ChallengeRepository } from "../ports/driven/challenge_repository";
+import { IdentityGenerator } from "../ports/driven/identity_generator";
 import { TimeProvider } from "../ports/driven/time_provider";
 import { ChallengeService } from "../ports/driver/challenge_service";
 
@@ -9,7 +9,8 @@ export const ChallengeServiceImpl = (
   challengeRepository: ChallengeRepository,
   // TODO: remove completely.
   prismaClient: PrismaClient,
-  timeProvider: TimeProvider
+  timeProvider: TimeProvider,
+  identityGenerator: IdentityGenerator
 ): ChallengeService => {
   return {
     list: async () => {
@@ -42,7 +43,7 @@ export const ChallengeServiceImpl = (
         level = 2;
       }
 
-      const data = { id: v4(), name, content, level };
+      const data = { id: identityGenerator.v4(), name, content, level };
 
       await challengeRepository.add(data);
     },

@@ -2,6 +2,7 @@ import { App } from "./app";
 
 import { PrismaClient } from "@prisma/client";
 import express, { ErrorRequestHandler } from "express";
+import { IdentityGeneratorProvider } from "./adapters/driven/identity_generator_provider";
 import { PrismaChallengeRepository } from "./adapters/driven/prisma_challenge_repository";
 import { SystemTimeProvider } from "./adapters/driven/system_time_provider";
 import { ChallengeController } from "./adapters/driver/challenge_controller";
@@ -26,10 +27,12 @@ app.get("/", (req, res) => {
 
 const challengeRepository = PrismaChallengeRepository(prismaClient);
 const timeProvider = SystemTimeProvider();
+const identityGenerator = IdentityGeneratorProvider();
 const challengeService = ChallengeServiceImpl(
   challengeRepository,
   prismaClient,
-  timeProvider
+  timeProvider,
+  identityGenerator
 );
 
 ChallengeController(app, challengeService);
