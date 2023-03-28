@@ -28,6 +28,7 @@ app.get("/", (req, res) => {
 const challengeRepository = PrismaChallengeRepository(prismaClient);
 const timeProvider = SystemTimeProvider();
 const identityGenerator = IdentityGeneratorProvider();
+
 const challengeService = ChallengeServiceImpl(
   challengeRepository,
   prismaClient,
