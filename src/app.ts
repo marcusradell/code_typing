@@ -14,13 +14,13 @@ export const App = () => {
   });
 
   app.get("/api/challenges", async (req, res) => {
-    res.json(await prismaClient.challangeRow.findMany());
+    res.json(await prismaClient.challengeRow.findMany());
   });
 
   app.get("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
 
-    const challenge = await prismaClient.challangeRow.findUnique({
+    const challenge = await prismaClient.challengeRow.findUnique({
       where: { id },
     });
 
@@ -46,7 +46,7 @@ export const App = () => {
       level = 2;
     }
 
-    await prismaClient.challangeRow.create({
+    await prismaClient.challengeRow.create({
       data: { id: v4(), name, content, level },
     });
 
@@ -58,7 +58,7 @@ export const App = () => {
 
     if (typeof id !== "string") return res.sendStatus(400);
 
-    await prismaClient.challangeRow.delete({ where: { id } });
+    await prismaClient.challengeRow.delete({ where: { id } });
     res.sendStatus(200);
   });
 

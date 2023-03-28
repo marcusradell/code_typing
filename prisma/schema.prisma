@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model ChallangeRow {
+model ChallengeRow {
   id      String @id
   name    String @unique
   content String
