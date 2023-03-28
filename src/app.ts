@@ -1,3 +1,4 @@
+import path from "path";
 import { PrismaClient } from "@prisma/client";
 import express, { ErrorRequestHandler } from "express";
 import { IdentityGeneratorProvider } from "./adapters/driven/identity_generator_provider";
@@ -14,8 +15,12 @@ export const App = () => {
 
   const prismaClient = new PrismaClient();
 
-  app.get("/", (req, res) => {
+  app.head("/status", (req, res) => {
     res.sendStatus(200);
+  });
+
+  app.get("/", (req, res) => {
+    res.sendFile("postman.json", { root: path.resolve(__dirname, "../") });
   });
 
   const challengeRepository = PrismaChallengeRepository(prismaClient);
