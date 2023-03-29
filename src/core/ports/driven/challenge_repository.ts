@@ -9,4 +9,5 @@ export interface ChallengeRepository {
   }) => Promise<void>;
   getAll: () => Promise<Challenge[]>;
   getById: (id: string) => Promise<Challenge | null>;
+  remove: (id: string) => Promise<void>;
 }

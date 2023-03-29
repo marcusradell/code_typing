@@ -7,7 +7,6 @@ import { ChallengeService } from "../ports/driver/challenge_service";
 
 export const ChallengeServiceImpl = (
   challengeRepository: ChallengeRepository,
-  prismaClient: PrismaClient,
   timeProvider: TimeProvider,
   identityGenerator: IdentityGenerator
 ): ChallengeService => {
@@ -56,7 +55,7 @@ export const ChallengeServiceImpl = (
         throw new ValidationError();
       }
 
-      await prismaClient.challengeRow.delete({ where: { id } });
+      await challengeRepository.remove(id);
     },
   };
 };

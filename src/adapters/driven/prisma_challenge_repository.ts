@@ -5,7 +5,6 @@ export const PrismaChallengeRepository = (
   prismaClient: PrismaClient
 ): ChallengeRepository => {
   return {
-    // We should have add, remove, getById, getAll
     add: async (data) => {
       await prismaClient.challengeRow.create({
         data,
@@ -18,6 +17,9 @@ export const PrismaChallengeRepository = (
       return await prismaClient.challengeRow.findUnique({
         where: { id },
       });
+    },
+    remove: async (id) => {
+      await prismaClient.challengeRow.delete({ where: { id } });
     },
   };
 };

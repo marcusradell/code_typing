@@ -37,7 +37,6 @@ export const App = () => {
 
   const challengeService = ChallengeServiceImpl(
     challengeRepository,
-    prismaClient,
     timeProvider,
     identityGenerator
   );
