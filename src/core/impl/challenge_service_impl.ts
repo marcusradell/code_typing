@@ -17,7 +17,7 @@ export const ChallengeServiceImpl = (
       return await prismaClient.challengeRow.findMany();
     },
     display: async (id) => {
-      if (!id || typeof id !== "string") {
+      if (typeof id !== "string") {
         throw new ValidationError();
       }
 
