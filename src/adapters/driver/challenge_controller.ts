@@ -33,8 +33,8 @@ export const ChallengeController = (
     res.sendStatus(200);
   });
 
-  app.delete("/api/challenges", async (req, res) => {
-    const { id } = req.body;
+  app.delete("/api/challenges/:id", async (req, res) => {
+    const { id } = req.params;
 
     try {
       await challengeService.remove(id);
