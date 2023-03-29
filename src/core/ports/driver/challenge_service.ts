@@ -6,16 +6,8 @@ export type Challenge = {
 };
 
 export interface ChallengeService {
-  list: List;
-  display: Display;
-  add: Add;
-  remove: Remove;
+  list: () => Promise<Challenge[]>;
+  display: (id: unknown) => Promise<Challenge | null>;
+  add: (args: { name: unknown; content: unknown }) => Promise<void>;
+  remove: (id: unknown) => Promise<void>;
 }
-
-type List = () => Promise<Challenge[]>;
-
-type Display = (id: unknown) => Promise<Challenge | null>;
-
-type Add = (args: { name: unknown; content: unknown }) => Promise<void>;
-
-type Remove = (id: unknown) => Promise<void>;
