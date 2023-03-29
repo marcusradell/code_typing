@@ -26,8 +26,6 @@ export const ChallengeController = (
   app.post("/api/challenges", async (req, res) => {
     const { name, content } = req.body;
 
-    // type check as string
-
     await challengeService.add({ name, content });
 
     res.sendStatus(200);

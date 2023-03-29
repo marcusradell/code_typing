@@ -48,7 +48,11 @@ export const ChallengeServiceImpl = (
 
       const data = { id: identityGenerator.v4(), name, content, level };
 
-      await challengeRepository.add(data);
+      try {
+        await challengeRepository.add(data);
+      } catch (error) {
+        throw new ValidationError();
+      }
     },
     remove: async (id) => {
       if (typeof id !== "string") {

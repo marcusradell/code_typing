@@ -8,6 +8,14 @@ import { ChallengeController } from "./adapters/driver/challenge_controller";
 import { ChallengeServiceImpl } from "./core/impl/challenge_service_impl";
 import { ValidationError } from "./validation_error";
 
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  if (err instanceof ValidationError) {
+    res.sendStatus(400);
+  } else {
+    res.sendStatus(500);
+  }
+};
+
 export const App = () => {
   const app = express();
 
@@ -35,14 +43,6 @@ export const App = () => {
   );
 
   ChallengeController(app, challengeService);
-
-  const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-    if (err instanceof ValidationError) {
-      res.sendStatus(400);
-    } else {
-      res.sendStatus(500);
-    }
-  };
 
   app.use(errorHandler);
 
