@@ -13,6 +13,9 @@ _NOTE: this is a laboration for setting up code architecture and does not try to
 ## Setup
 
 `npm i`
+`cp .env.example .env`
+`npm run dev-db`
+`npx prisma dev --migrate`
 
 ## Develop
 
@@ -20,6 +23,6 @@ _NOTE: this is a laboration for setting up code architecture and does not try to
 
 ## Deploy
 
-`git push main`
+_Deploy script will only listen to one branch, and needs to be updated in GCP Cloud Build._
 
-_NOTE: this is temporarily set to listen to a branch named `hexagonal` instead of `main`._
+`git push`
