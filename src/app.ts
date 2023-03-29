@@ -1,7 +1,7 @@
 import path from "path";
 import { PrismaClient } from "@prisma/client";
 import express, { ErrorRequestHandler } from "express";
-import { IdentityGeneratorProvider } from "./adapters/driven/identity_generator_provider";
+import { identityGeneratorProviderFactory } from "./adapters/driven/identity_generator_provider";
 import { PrismaChallengeRepository } from "./adapters/driven/prisma_challenge_repository";
 import { SystemTimeProvider } from "./adapters/driven/system_time_provider";
 import { challengeControllerFactory } from "./adapters/driver/challenge_controller";
@@ -33,7 +33,7 @@ export const App = () => {
 
   const challengeRepository = PrismaChallengeRepository(prismaClient);
   const timeProvider = SystemTimeProvider();
-  const identityGenerator = IdentityGeneratorProvider();
+  const identityGenerator = identityGeneratorProviderFactory();
 
   const challengeService = ChallengeServiceImpl(
     challengeRepository,
