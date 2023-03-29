@@ -1,5 +1,16 @@
+import { PrismaClient } from "@prisma/client";
 import request from "supertest";
 import { App } from "./app";
+
+const resetDb = async () => {
+  const prismaClient = new PrismaClient();
+
+  const deletes = Object.keys(prismaClient)
+    .filter((key) => !key.startsWith("_") && !key.startsWith("$"))
+    .map((key) => (prismaClient as any)[key].deleteMany());
+
+  await Promise.all(deletes);
+};
 
 test("Server is running", async () => {
   const response = await request(App()).get("/");
@@ -8,6 +19,8 @@ test("Server is running", async () => {
 });
 
 test("Add, list, get by ID, remove, and list", async () => {
+  await resetDb();
+
   const app = request(App());
 
   const data = {
@@ -54,6 +67,8 @@ test("Add, list, get by ID, remove, and list", async () => {
 });
 
 test("Add same name twice fails", async () => {
+  await resetDb();
+
   const app = request(App());
 
   const data = {
