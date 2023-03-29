@@ -31,11 +31,14 @@ export const ChallengeServiceImpl = (
 
       return challenge;
     },
-    add: async (name) => {
-      const content = "abc;";
-      let level = 1;
+    add: async ({ name, content }) => {
+      if (typeof name !== "string" || typeof content !== "string") {
+        throw new ValidationError();
+      }
+
       const today = timeProvider.now();
       const MONDAY = 1;
+      let level = 1;
 
       if (content.length > 100 && content.includes(";")) {
         level = 3;

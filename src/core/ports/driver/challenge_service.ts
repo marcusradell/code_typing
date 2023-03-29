@@ -16,6 +16,6 @@ type List = () => Promise<Challenge[]>;
 
 type Display = (id: unknown) => Promise<Challenge | null>;
 
-type Add = (name: string) => Promise<void>;
+type Add = (args: { name: unknown; content: unknown }) => Promise<void>;
 
 type Remove = (id: unknown) => Promise<void>;
