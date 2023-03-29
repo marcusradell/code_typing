@@ -5,7 +5,7 @@ import { IdentityGenerator } from "../ports/driven/identity_generator";
 import { TimeProvider } from "../ports/driven/time_provider";
 import { ChallengeService } from "../ports/driver/challenge_service";
 
-export const ChallengeServiceImpl = (
+export const challengeServiceImplFactory = (
   challengeRepository: ChallengeRepository,
   timeProvider: TimeProvider,
   identityGenerator: IdentityGenerator

@@ -5,7 +5,7 @@ import { identityGeneratorProviderFactory } from "./adapters/driven/identity_gen
 import { prismaChallengeRepositoryFactory } from "./adapters/driven/prisma_challenge_repository";
 import { systemTimeProviderFactory } from "./adapters/driven/system_time_provider";
 import { challengeControllerFactory } from "./adapters/driver/challenge_controller";
-import { ChallengeServiceImpl } from "./core/impl/challenge_service_impl";
+import { challengeServiceImplFactory } from "./core/impl/challenge_service_impl";
 import { ValidationError } from "./validation_error";
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
@@ -35,7 +35,7 @@ export const App = () => {
   const timeProvider = systemTimeProviderFactory();
   const identityGenerator = identityGeneratorProviderFactory();
 
-  const challengeService = ChallengeServiceImpl(
+  const challengeService = challengeServiceImplFactory(
     challengeRepository,
     timeProvider,
     identityGenerator
