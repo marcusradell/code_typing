@@ -25,6 +25,10 @@ export const App = () => {
   app.get("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
 
+    if (typeof id !== "string") {
+      return res.sendStatus(400);
+    }
+
     const challenge = await prismaClient.challengeRow.findUnique({
       where: { id },
     });
