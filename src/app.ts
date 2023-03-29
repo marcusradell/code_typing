@@ -4,7 +4,7 @@ import express, { ErrorRequestHandler } from "express";
 import { IdentityGeneratorProvider } from "./adapters/driven/identity_generator_provider";
 import { PrismaChallengeRepository } from "./adapters/driven/prisma_challenge_repository";
 import { SystemTimeProvider } from "./adapters/driven/system_time_provider";
-import { ChallengeController } from "./adapters/driver/challenge_controller";
+import { challengeControllerFactory } from "./adapters/driver/challenge_controller";
 import { ChallengeServiceImpl } from "./core/impl/challenge_service_impl";
 import { ValidationError } from "./validation_error";
 
@@ -41,7 +41,7 @@ export const App = () => {
     identityGenerator
   );
 
-  ChallengeController(app, challengeService);
+  challengeControllerFactory(app, challengeService);
 
   app.use(errorHandler);
 
