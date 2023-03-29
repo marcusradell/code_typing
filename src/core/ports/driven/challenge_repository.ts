@@ -1,8 +1,12 @@
+import { Challenge } from "../driver/challenge_service";
+
 export interface ChallengeRepository {
-  add(data: {
+  add: (data: {
     id: string;
     name: string;
     content: string;
     level: number;
-  }): Promise<void>;
+  }) => Promise<void>;
+  getAll: () => Promise<Challenge[]>;
+  getById: (id: string) => Promise<Challenge | null>;
 }

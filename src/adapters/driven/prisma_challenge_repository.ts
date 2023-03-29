@@ -11,5 +11,13 @@ export const PrismaChallengeRepository = (
         data,
       });
     },
+    getAll: async () => {
+      return await prismaClient.challengeRow.findMany();
+    },
+    getById: async (id) => {
+      return await prismaClient.challengeRow.findUnique({
+        where: { id },
+      });
+    },
   };
 };

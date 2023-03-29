@@ -7,23 +7,20 @@ import { ChallengeService } from "../ports/driver/challenge_service";
 
 export const ChallengeServiceImpl = (
   challengeRepository: ChallengeRepository,
-  // TODO: remove completely.
   prismaClient: PrismaClient,
   timeProvider: TimeProvider,
   identityGenerator: IdentityGenerator
 ): ChallengeService => {
   return {
     list: async () => {
-      return await prismaClient.challengeRow.findMany();
+      return await challengeRepository.getAll();
     },
     display: async (id) => {
       if (typeof id !== "string") {
         throw new ValidationError();
       }
 
-      const challenge = await prismaClient.challengeRow.findUnique({
-        where: { id },
-      });
+      const challenge = await challengeRepository.getById(id);
 
       if (!challenge) {
         throw new ValidationError();
