@@ -53,7 +53,7 @@ test("Add, list, get by ID, remove, and list", async () => {
   expect(getAllEmptyResponse.body).toEqual([]);
 });
 
-test.skip("Add same name twice fails", async () => {
+test("Add same name twice fails", async () => {
   const app = request(App());
 
   const data = {

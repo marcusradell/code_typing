@@ -39,27 +39,30 @@ export const App = () => {
   });
 
   app.post("/api/challenges", async (req, res) => {
-    const { name, content } = req.body;
+    try {
+      const { name, content } = req.body;
 
-    if (typeof name !== "string" || typeof content !== "string") {
+      if (typeof name !== "string" || typeof content !== "string") {
+        return res.sendStatus(400);
+      }
+
+      const today = new Date();
+      const MONDAY = 1;
+      let level = 1;
+
+      if (content.length > 100 && content.includes(";")) {
+        level = 3;
+      } else if (today.getDay() === MONDAY) {
+        level = 2;
+      }
+      await prismaClient.challengeRow.create({
+        data: { id: v4(), name, content, level },
+      });
+
+      res.sendStatus(200);
+    } catch (error) {
       return res.sendStatus(400);
     }
-
-    const today = new Date();
-    const MONDAY = 1;
-    let level = 1;
-
-    if (content.length > 100 && content.includes(";")) {
-      level = 3;
-    } else if (today.getDay() === MONDAY) {
-      level = 2;
-    }
-
-    await prismaClient.challengeRow.create({
-      data: { id: v4(), name, content, level },
-    });
-
-    res.sendStatus(200);
   });
 
   app.delete("/api/challenges/:id", async (req, res) => {
