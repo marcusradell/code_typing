@@ -8,7 +8,7 @@
     "start": "node build",
     "dev-db": "docker run -e POSTGRES_PASSWORD=password -d -p 5434:5432 postgres",
     "dev": "npm run build && npm start",
-    "test": "jest"
+    "test": "jest -i"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,16 @@
+import { PrismaClient } from "@prisma/client";
 import request from "supertest";
 import { App } from "./app";
+
+const resetDb = async () => {
+  const prismaClient = new PrismaClient();
+
+  const deletes = Object.keys(prismaClient)
+    .filter((key) => !key.startsWith("_") && !key.startsWith("$"))
+    .map((key) => (prismaClient as any)[key].deleteMany());
+
+  await Promise.all(deletes);
+};
 
 test("Server is running", async () => {
   const response = await request(App()).get("/");
@@ -8,6 +19,8 @@ test("Server is running", async () => {
 });
 
 test("Add, list, get by ID, remove, and list", async () => {
+  await resetDb();
+
   const app = request(App());
 
   const data = {
@@ -51,16 +64,20 @@ test("Add, list, get by ID, remove, and list", async () => {
 
   expect(getAllEmptyResponse.status).toEqual(200);
   expect(getAllEmptyResponse.body).toEqual([]);
+});
 
-  const nonUniqeData = {
+test("Add same name twice fails", async () => {
+  await resetDb();
+
+  const app = request(App());
+
+  const data = {
     name: "Keep it DRY",
     content: "const x = 5; const y = 5;",
   };
 
-  await app.post("/api/challenges").send(nonUniqeData);
-  const secondAddResponse = await app
-    .post("/api/challenges")
-    .send(nonUniqeData);
+  await app.post("/api/challenges").send(data);
+  const secondAddResponse = await app.post("/api/challenges").send(data);
 
   expect(secondAddResponse.status).toEqual(400);
 });
