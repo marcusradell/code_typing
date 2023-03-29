@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { ChallengeRepository } from "../../core/ports/driven/challenge_repository";
 
-export const PrismaChallengeRepository = (
+export const prismaChallengeRepositoryFactory = (
   prismaClient: PrismaClient
 ): ChallengeRepository => {
   return {
