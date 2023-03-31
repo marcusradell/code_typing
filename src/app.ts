@@ -21,10 +21,7 @@ export const App = () => {
 
   const challengesModule = challengesModuleFactory(prismaClient);
 
-  app.get("/api/challenges", async (req, res) => {
-    const result = await challengesModule.service.getAll();
-    res.json(result);
-  });
+  app.use("/api/challenges", challengesModule.routerFactory());
 
   app.get("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
