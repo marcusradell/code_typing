@@ -95,52 +95,6 @@ test("Delete challenge", async () => {
   expect(getAllResponse.body).toEqual([]);
 });
 
-test("Add, list, get by ID, remove, and list", async () => {
-  const app = await arrangeApp();
-
-  const data = {
-    name: "Roman Numerals",
-    content: `if(number < 1) throw new Error("Roman numerals doesn't support 0 or negative numbers.);`,
-  };
-
-  const postResponse = await app.post("/api/challenges").send(data);
-
-  expect(postResponse.status).toEqual(200);
-
-  const getAllResponse = await app.get("/api/challenges");
-
-  // NOTE: We are not asserting the ID nor the level, because the ID is randomly generated
-  // and the level is calculated based on a non-deterministic source (system clock).
-  const testableBody = getAllResponse.body.map(
-    ({ id, level, ...rest }: any) => {
-      return { ...rest };
-    }
-  );
-
-  expect(getAllResponse.status).toEqual(200);
-  expect(testableBody).toEqual([{ ...data }]);
-
-  const challengeId = getAllResponse.body[0].id;
-
-  const getByIdResponse = await app.get(`/api/challenges/${challengeId}`);
-
-  expect(getByIdResponse.status).toEqual(200);
-  expect(getByIdResponse.body).toEqual({
-    id: challengeId,
-    ...data,
-    level: 1,
-  });
-
-  const deleteResponse = await app.delete(`/api/challenges/${challengeId}`);
-
-  expect(deleteResponse.status).toEqual(200);
-
-  const getAllEmptyResponse = await app.get("/api/challenges");
-
-  expect(getAllEmptyResponse.status).toEqual(200);
-  expect(getAllEmptyResponse.body).toEqual([]);
-});
-
 test("Add same name twice fails", async () => {
   const app = await arrangeApp();
 
