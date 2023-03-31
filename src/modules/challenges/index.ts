@@ -1,4 +1,3 @@
-import { ChallengeRow } from "@prisma/client";
 import { routerFactory } from "./router";
 import { Db } from "./types";
 
