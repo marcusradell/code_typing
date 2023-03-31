@@ -75,6 +75,26 @@ test("Get challenge by ID", async () => {
   expect(deterministicResult).toEqual(data);
 });
 
+test("Delete challenge", async () => {
+  const app = await arrangeApp();
+
+  const data = {
+    name: "Roman Numerals",
+    content: `if(number < 1) throw new Error("Roman numerals doesn't support 0 or negative numbers.);`,
+  };
+
+  const postResponse = await app.post(challengeUrl).send(data);
+
+  const deleteResponse = await app.delete(
+    `${challengeUrl}/${postResponse.body.id}`
+  );
+
+  const getAllResponse = await app.get(challengeUrl);
+
+  expect(deleteResponse.status).toEqual(200);
+  expect(getAllResponse.body).toEqual([]);
+});
+
 test("Add, list, get by ID, remove, and list", async () => {
   const app = await arrangeApp();
 
