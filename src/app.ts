@@ -23,14 +23,5 @@ export const App = () => {
 
   app.use("/api/challenges", challengesModule.routerFactory());
 
-  app.delete("/api/challenges/:id", async (req, res) => {
-    const id = req.params.id;
-
-    if (typeof id !== "string") return res.sendStatus(400);
-
-    await prismaClient.challengeRow.delete({ where: { id } });
-    res.sendStatus(200);
-  });
-
   return app;
 };

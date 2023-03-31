@@ -52,5 +52,14 @@ export const routerFactory = (service: ChallengesService) => {
     }
   });
 
+  router.delete("/:id", async (req, res) => {
+    const id = req.params.id;
+
+    if (typeof id !== "string") return res.sendStatus(400);
+
+    await service.delete(id);
+    res.sendStatus(200);
+  });
+
   return router;
 };

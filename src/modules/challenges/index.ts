@@ -17,6 +17,8 @@ export const challengesModuleFactory = (db: Db) => {
       content: string;
       level: number;
     }) => await db.challengeRow.create({ data }),
+    delete: async (id: string) =>
+      await db.challengeRow.delete({ where: { id } }),
   };
 
   return {
