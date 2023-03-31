@@ -4,9 +4,9 @@ import { App } from "./app";
 
 const challengeUrl = "/api/challenges";
 
-const arrangeApp = async () => {
-  const prismaClient = new PrismaClient();
+const prismaClient = new PrismaClient();
 
+const arrangeApp = async () => {
   const deletes = Object.keys(prismaClient)
     .filter((key) => !key.startsWith("_") && !key.startsWith("$"))
     .map((key) => (prismaClient as any)[key].deleteMany());
@@ -53,6 +53,25 @@ test("Add a challenge", async () => {
   expect(postResponse.status).toEqual(200);
   expect(getResponse.status).toEqual(200);
   expect(deterministicResult).toEqual([data]);
+});
+
+test("Get challenge by ID", async () => {
+  const app = await arrangeApp();
+
+  const data = {
+    name: "Roman Numerals",
+    content: `if(number < 1) throw new Error("Roman numerals doesn't support 0 or negative numbers.);`,
+  };
+
+  const postResponse = await app.post(challengeUrl).send(data);
+
+  const getByIdResponse = await app.get(
+    `${challengeUrl}/${postResponse.body.id}`
+  );
+
+  const { level, id, ...deterministicResult } = getByIdResponse.body;
+
+  expect(deterministicResult).toEqual(data);
 });
 
 test("Add, list, get by ID, remove, and list", async () => {

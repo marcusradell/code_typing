@@ -55,11 +55,14 @@ export const App = () => {
       } else if (today.getDay() === MONDAY) {
         level = 2;
       }
+
+      const id = v4();
+
       await prismaClient.challengeRow.create({
-        data: { id: v4(), name, content, level },
+        data: { id, name, content, level },
       });
 
-      res.sendStatus(200);
+      res.json({ id });
     } catch (error) {
       return res.sendStatus(400);
     }
