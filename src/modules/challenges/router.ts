@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { ChallengesService } from ".";
-import { v4 } from "uuid";
 
 export const routerFactory = (service: ChallengesService) => {
   const router = Router();
@@ -19,12 +18,9 @@ export const routerFactory = (service: ChallengesService) => {
   router.post("/", async (req, res) => {
     const { name, content } = req.body;
 
-    const id = v4();
-    const today = new Date();
+    const data = await service.create({ name, content });
 
-    await service.create({ id, name, content, today });
-
-    res.json({ id });
+    res.json(data);
   });
 
   router.delete("/:id", async (req, res) => {

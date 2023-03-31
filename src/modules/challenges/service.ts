@@ -1,5 +1,6 @@
 import { ClientError } from "../../client_error";
 import { Db } from "./types";
+import { createFactory } from "./create";
 
 export const serviceFactory = (db: Db) => {
   return {
@@ -15,29 +16,7 @@ export const serviceFactory = (db: Db) => {
 
       return row;
     },
-    create: async (args: {
-      name: unknown;
-      content: unknown;
-      id: string;
-      today: Date;
-    }) => {
-      const { name, content, id, today } = args;
-
-      if (typeof name !== "string" || typeof content !== "string")
-        throw new ClientError();
-
-      const MONDAY = 1;
-      let level = 1;
-
-      if (content.length > 100 && content.includes(";")) {
-        level = 3;
-      } else if (today.getDay() === MONDAY) {
-        level = 2;
-      }
-      return await db.challengeRow.create({
-        data: { name, content, id, level },
-      });
-    },
+    create: createFactory(db),
     delete: async (args: { id: string }) => {
       const { id } = args;
 
