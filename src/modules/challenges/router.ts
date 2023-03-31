@@ -17,27 +17,21 @@ export const routerFactory = (service: ChallengesService) => {
   });
 
   router.post("/", async (req, res) => {
-    try {
-      const { name, content } = req.body;
+    const { name, content } = req.body;
 
-      const id = v4();
-      const today = new Date();
+    const id = v4();
+    const today = new Date();
 
-      await service.create({ id, name, content, today });
+    await service.create({ id, name, content, today });
 
-      res.json({ id });
-    } catch (error) {
-      return res.sendStatus(400);
-    }
+    res.json({ id });
   });
 
   router.delete("/:id", async (req, res) => {
-    const id = req.params.id;
+    const { id } = req.params;
 
-    if (typeof id !== "string") return res.sendStatus(400);
-
-    await service.delete(id);
-    res.sendStatus(200);
+    const data = await service.delete({ id });
+    res.json(data);
   });
 
   return router;

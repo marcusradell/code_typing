@@ -38,7 +38,12 @@ export const serviceFactory = (db: Db) => {
         data: { name, content, id, level },
       });
     },
-    delete: async (id: string) =>
-      await db.challengeRow.delete({ where: { id } }),
+    delete: async (args: { id: string }) => {
+      const { id } = args;
+
+      if (typeof id !== "string") throw new ClientError();
+
+      await db.challengeRow.delete({ where: { id } });
+    },
   };
 };
