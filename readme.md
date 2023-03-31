@@ -26,3 +26,5 @@ _NOTE: this is a laboration for setting up code architecture and does not try to
 _Deploy script will only listen to one branch, and needs to be updated in GCP Cloud Build._
 
 `git push`
+
+All development dependencies in `package.json` are included in the production build to keep the `Dockerfile` as simple as possible.
