@@ -11,6 +11,12 @@ export const challengesModuleFactory = (db: Db) => {
       db.challengeRow.findUnique({
         where: { id },
       }),
+    create: async (data: {
+      id: string;
+      name: string;
+      content: string;
+      level: number;
+    }) => await db.challengeRow.create({ data }),
   };
 
   return {

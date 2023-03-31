@@ -23,36 +23,6 @@ export const App = () => {
 
   app.use("/api/challenges", challengesModule.routerFactory());
 
-  app.post("/api/challenges", async (req, res) => {
-    try {
-      const { name, content } = req.body;
-
-      if (typeof name !== "string" || typeof content !== "string") {
-        return res.sendStatus(400);
-      }
-
-      const today = new Date();
-      const MONDAY = 1;
-      let level = 1;
-
-      if (content.length > 100 && content.includes(";")) {
-        level = 3;
-      } else if (today.getDay() === MONDAY) {
-        level = 2;
-      }
-
-      const id = v4();
-
-      await prismaClient.challengeRow.create({
-        data: { id, name, content, level },
-      });
-
-      res.json({ id });
-    } catch (error) {
-      return res.sendStatus(400);
-    }
-  });
-
   app.delete("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
 
