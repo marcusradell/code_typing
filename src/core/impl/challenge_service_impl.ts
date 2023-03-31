@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { ValidationError } from "../../validation_error";
 import { ChallengeRepository } from "../ports/driven/challenge_repository";
 import { IdentityGenerator } from "../ports/driven/identity_generator";
