@@ -2,13 +2,12 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import { v4 } from "uuid";
 import path from "path";
+import { challengesModuleFactory } from "./modules";
 
 export const App = () => {
   const app = express();
 
   app.use(express.json());
-
-  const prismaClient = new PrismaClient();
 
   app.head("/status", (req, res) => {
     res.sendStatus(200);
@@ -18,8 +17,13 @@ export const App = () => {
     res.sendFile("postman.json", { root: path.resolve(__dirname, "../") });
   });
 
+  const prismaClient = new PrismaClient();
+
+  const challengesModule = challengesModuleFactory(prismaClient);
+
   app.get("/api/challenges", async (req, res) => {
-    res.json(await prismaClient.challengeRow.findMany());
+    const result = await challengesModule.service.getAll();
+    res.json(result);
   });
 
   app.get("/api/challenges/:id", async (req, res) => {
