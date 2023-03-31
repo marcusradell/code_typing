@@ -71,6 +71,7 @@ test("Get challenge by ID", async () => {
 
   const { level, id, ...deterministicResult } = getByIdResponse.body;
 
+  expect(getByIdResponse.status).toEqual(200);
   expect(deterministicResult).toEqual(data);
 });
 
