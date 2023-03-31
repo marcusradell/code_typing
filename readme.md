@@ -12,10 +12,10 @@ _NOTE: this is a laboration for setting up code architecture and does not try to
 
 ## Setup
 
-`npm i`
-`cp .env.example .env`
-`npm run dev-db`
-`npx prisma dev --migrate`
+- `npm i`
+- `cp .env.example .env`
+- `npm run dev-db`
+- `npx prisma dev --migrate`
 
 ## Develop
 
