@@ -1,15 +1,16 @@
-import { PrismaClient } from "@prisma/client";
+import { ChallengeRow } from "@prisma/client";
 import { routerFactory } from "./router";
+import { Db } from "./types";
 
-type Db = PrismaClient;
-
-export type ChallengesService = ReturnType<
-  typeof challengesModuleFactory
->["service"];
+export { ChallengesService, Challenge } from "./types";
 
 export const challengesModuleFactory = (db: Db) => {
   const service = {
     getAll: async () => await db.challengeRow.findMany(),
+    get: async (id: string) =>
+      db.challengeRow.findUnique({
+        where: { id },
+      }),
   };
 
   return {
