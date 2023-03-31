@@ -20,23 +20,10 @@ export const routerFactory = (service: ChallengesService) => {
     try {
       const { name, content } = req.body;
 
-      if (typeof name !== "string" || typeof content !== "string") {
-        return res.sendStatus(400);
-      }
-
-      const today = new Date();
-      const MONDAY = 1;
-      let level = 1;
-
-      if (content.length > 100 && content.includes(";")) {
-        level = 3;
-      } else if (today.getDay() === MONDAY) {
-        level = 2;
-      }
-
       const id = v4();
+      const today = new Date();
 
-      await service.create({ id, name, content, level });
+      await service.create({ id, name, content, today });
 
       res.json({ id });
     } catch (error) {
