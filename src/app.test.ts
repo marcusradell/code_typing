@@ -27,7 +27,32 @@ test("Empty list of challenges", async () => {
 
   const response = await app.get(challengeUrl);
 
+  expect(response.status).toEqual(200);
   expect(response.body).toEqual([]);
+});
+
+test("Add a challenge", async () => {
+  const app = await arrangeApp();
+
+  const data = {
+    name: "Roman Numerals",
+    content: `if(number < 1) throw new Error("Roman numerals doesn't support 0 or negative numbers.);`,
+  };
+
+  const postResponse = await app.post(challengeUrl).send(data);
+
+  const getResponse = await app.get(challengeUrl);
+
+  const deterministicResult = getResponse.body.map((challenge: any) => {
+    // Fields level and id are non-deterministic and need to be removed from the object.
+    const { level, id, ...deterministicResult } = challenge;
+
+    return deterministicResult;
+  });
+
+  expect(postResponse.status).toEqual(200);
+  expect(getResponse.status).toEqual(200);
+  expect(deterministicResult).toEqual([data]);
 });
 
 test("Add, list, get by ID, remove, and list", async () => {
