@@ -26,9 +26,9 @@ export const challengeControllerFactory = (
   app.post("/api/challenges", async (req, res) => {
     const { name, content } = req.body;
 
-    await challengeService.add({ name, content });
+    const createdData = await challengeService.add({ name, content });
 
-    res.sendStatus(200);
+    res.json(createdData);
   });
 
   app.delete("/api/challenges/:id", async (req, res) => {

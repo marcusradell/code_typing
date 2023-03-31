@@ -42,10 +42,14 @@ export const challengeServiceImplFactory = (
         level = 2;
       }
 
-      const data = { id: identityGenerator.v4(), name, content, level };
+      const id = identityGenerator.v4();
+
+      const data = { id, name, content, level };
 
       try {
         await challengeRepository.add(data);
+
+        return { id };
       } catch (error) {
         throw new ValidationError();
       }
