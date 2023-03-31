@@ -4,7 +4,7 @@ import { App } from "./app";
 
 const challengeUrl = "/api/challenges";
 
-const resetDb = async () => {
+const arrangeApp = async () => {
   const prismaClient = new PrismaClient();
 
   const deletes = Object.keys(prismaClient)
@@ -12,6 +12,8 @@ const resetDb = async () => {
     .map((key) => (prismaClient as any)[key].deleteMany());
 
   await Promise.all(deletes);
+
+  return request(App());
 };
 
 test("Server is running", async () => {
@@ -21,9 +23,7 @@ test("Server is running", async () => {
 });
 
 test("Empty list of challenges", async () => {
-  await resetDb();
-
-  const app = request(App());
+  const app = await arrangeApp();
 
   const response = await app.get(challengeUrl);
 
@@ -31,9 +31,7 @@ test("Empty list of challenges", async () => {
 });
 
 test("Add, list, get by ID, remove, and list", async () => {
-  await resetDb();
-
-  const app = request(App());
+  const app = await arrangeApp();
 
   const data = {
     name: "Roman Numerals",
@@ -79,9 +77,7 @@ test("Add, list, get by ID, remove, and list", async () => {
 });
 
 test("Add same name twice fails", async () => {
-  await resetDb();
-
-  const app = request(App());
+  const app = await arrangeApp();
 
   const data = {
     name: "Keep it DRY",
