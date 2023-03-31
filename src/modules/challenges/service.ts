@@ -1,12 +1,20 @@
+import { ClientError } from "../../client_error";
 import { Db } from "./types";
 
 export const serviceFactory = (db: Db) => {
   return {
     getAll: async () => await db.challengeRow.findMany(),
-    get: async (id: string) =>
-      db.challengeRow.findUnique({
-        where: { id },
-      }),
+    get: async (args: { id: string }) => {
+      if (typeof args.id !== "string") throw new ClientError();
+
+      const row = db.challengeRow.findUnique({
+        where: { id: args.id },
+      });
+
+      if (!row) throw new ClientError();
+
+      return row;
+    },
     create: async (data: {
       id: string;
       name: string;

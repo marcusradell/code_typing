@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import path from "path";
 import { challengesModuleFactory } from "./modules";
+import { errorHandler } from "./error_handler";
 
 export const App = () => {
   const app = express();
@@ -21,6 +22,8 @@ export const App = () => {
   const challengesModule = challengesModuleFactory(prismaClient);
 
   app.use("/api/challenges", challengesModule.routerFactory());
+
+  app.use(errorHandler);
 
   return app;
 };
