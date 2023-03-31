@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
-import { v4 } from "uuid";
 import path from "path";
 import { challengesModuleFactory } from "./modules";
 
