@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import request from "supertest";
 import { App } from "./app";
 
+const challengeUrl = "/api/challenges";
+
 const resetDb = async () => {
   const prismaClient = new PrismaClient();
 
@@ -16,6 +18,16 @@ test("Server is running", async () => {
   const response = await request(App()).get("/");
 
   expect(response.status).toEqual(200);
+});
+
+test("Empty list of challenges", async () => {
+  await resetDb();
+
+  const app = request(App());
+
+  const response = await app.get(challengeUrl);
+
+  expect(response.body).toEqual([]);
 });
 
 test("Add, list, get by ID, remove, and list", async () => {
