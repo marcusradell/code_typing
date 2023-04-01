@@ -7,39 +7,24 @@ export const challengeControllerFactory = (
 ) => {
   app.get("/api/challenges", async (req, res) => {
     const challenges = await challengeService.list();
-
     res.json(challenges);
   });
 
   app.get("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
-
-    try {
-      const challenge = await challengeService.display(id);
-
-      res.json(challenge);
-    } catch (error) {
-      return res.sendStatus(400);
-    }
+    const challenge = await challengeService.display(id);
+    res.json(challenge);
   });
 
   app.post("/api/challenges", async (req, res) => {
     const { name, content } = req.body;
-
     const createdData = await challengeService.add({ name, content });
-
     res.json(createdData);
   });
 
   app.delete("/api/challenges/:id", async (req, res) => {
     const { id } = req.params;
-
-    try {
-      await challengeService.remove(id);
-
-      res.sendStatus(200);
-    } catch (error) {
-      res.sendStatus(400);
-    }
+    await challengeService.remove(id);
+    res.json();
   });
 };
