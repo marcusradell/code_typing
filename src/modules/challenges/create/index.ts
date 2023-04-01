@@ -4,8 +4,8 @@ import { Db } from "../types";
 import { logic } from "./logic";
 
 export const createFactory =
-  (db: Db) => async (args: { name: unknown; content: unknown }) => {
-    const { name, content } = args;
+  (db: Db) => async (input: { name: unknown; content: unknown }) => {
+    const { name, content } = input;
 
     if (typeof name !== "string" || typeof content !== "string")
       throw new ClientError();
