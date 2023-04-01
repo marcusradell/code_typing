@@ -1,10 +1,7 @@
-import { ValidationError } from "../../../client_error";
 import { Db } from "../types";
+import { Input, inputSchema } from "./input";
 
-export const deleteFactory = (db: Db) => async (input: { id: unknown }) => {
-  const { id } = input;
-
-  if (typeof id !== "string") throw new ValidationError();
-
+export const deleteFactory = (db: Db) => async (rawInput: Input) => {
+  const { id } = inputSchema.parse(rawInput);
   await db.challengeRow.delete({ where: { id } });
 };
