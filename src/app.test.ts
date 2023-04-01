@@ -108,3 +108,15 @@ test("Add same name twice fails", async () => {
 
   expect(secondAddResponse.status).toEqual(400);
 });
+
+test("Missing content fails", async () => {
+  const app = await arrangeApp();
+
+  const data = {
+    name: "Empty challenge",
+  };
+
+  const response = await app.post("/api/challenges").send(data);
+
+  expect(response.status).toEqual(400);
+});
