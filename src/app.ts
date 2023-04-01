@@ -4,7 +4,7 @@ import path from "path";
 import { challengesModuleFactory } from "./modules";
 import { errorHandler } from "./error_handler";
 
-export const App = () => {
+export const appFactory = () => {
   const app = express();
 
   app.use(express.json());
