@@ -17,15 +17,12 @@ export const routerFactory = (service: ChallengesService) => {
 
   router.post("/", async (req, res) => {
     const { name, content } = req.body;
-
     const data = await service.create({ name, content });
-
     res.json(data);
   });
 
   router.delete("/:id", async (req, res) => {
     const { id } = req.params;
-
     const data = await service.delete({ id });
     res.json(data);
   });
