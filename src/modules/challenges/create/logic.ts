@@ -1,6 +1,6 @@
 const MONDAY = 1;
 
-export const state = (
+export const logic = (
   name: string,
   content: string,
   today: Date,
