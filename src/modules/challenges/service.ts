@@ -1,10 +1,11 @@
 import { ClientError } from "../../client_error";
 import { Db } from "./types";
 import { createFactory } from "./create";
+import { getAllFactory } from "./get_all";
 
 export const serviceFactory = (db: Db) => {
   return {
-    getAll: async () => await db.challengeRow.findMany(),
+    getAll: getAllFactory(db),
     get: async (args: { id: unknown }) => {
       if (typeof args.id !== "string") throw new ClientError();
 
