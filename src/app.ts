@@ -16,7 +16,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   }
 };
 
-export const App = () => {
+export const appFactory = () => {
   const app = express();
 
   app.use(express.json());
