@@ -1,10 +1,9 @@
 import { ValidationError } from "../../../client_error";
 import { Db } from "../types";
+import { Input, inputSchema } from "./input";
 
-export const getFactory = (db: Db) => async (input: { id: unknown }) => {
-  const { id } = input;
-
-  if (typeof id !== "string") throw new ValidationError();
+export const getFactory = (db: Db) => async (rawInput: Input) => {
+  const { id } = inputSchema.parse(rawInput);
 
   const row = db.challengeRow.findUnique({
     where: { id },
