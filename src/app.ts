@@ -3,7 +3,7 @@ import express from "express";
 import { v4 } from "uuid";
 import path from "path";
 
-export const App = () => {
+export const appFactory = () => {
   const app = express();
 
   app.use(express.json());

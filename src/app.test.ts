@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import request from "supertest";
-import { App } from "./app";
+import { appFactory } from "./app";
 
 const challengeUrl = "/api/challenges";
 
@@ -13,11 +13,11 @@ const arrangeApp = async () => {
 
   await Promise.all(deletes);
 
-  return request(App());
+  return request(appFactory());
 };
 
 test("Server is running", async () => {
-  const response = await request(App()).get("/");
+  const response = await request(appFactory()).get("/");
 
   expect(response.status).toEqual(200);
 });
