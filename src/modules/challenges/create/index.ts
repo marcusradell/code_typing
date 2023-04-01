@@ -11,9 +11,9 @@ export const createFactory =
       throw new ClientError();
 
     const id = v4();
-    const today = new Date();
+    const todayWeekday = new Date().getDay();
 
-    const data = logic(name, content, today, id);
+    const data = logic({ id, name, content, todayWeekday });
 
     try {
       await db.challengeRow.create({

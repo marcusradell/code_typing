@@ -1,16 +1,18 @@
-const MONDAY = 1;
+export const MONDAY = 1;
 
-export const logic = (
-  name: string,
-  content: string,
-  today: Date,
-  id: string
-) => {
+export const logic = (args: {
+  id: string;
+  name: string;
+  content: string;
+  todayWeekday: number;
+}) => {
+  const { id, name, content, todayWeekday } = args;
+
   let level = 1;
 
   if (content.length > 100 && content.includes(";")) {
     level = 3;
-  } else if (today.getDay() === MONDAY) {
+  } else if (todayWeekday === MONDAY) {
     level = 2;
   }
 
