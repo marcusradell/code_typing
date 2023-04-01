@@ -1,15 +1,13 @@
-import { ValidationError } from "../../../client_error";
 import { Db } from "../types";
 import { Input, inputSchema } from "./input";
+import { logic } from "./logic";
 
 export const getFactory = (db: Db) => async (rawInput: Input) => {
   const { id } = inputSchema.parse(rawInput);
 
-  const row = db.challengeRow.findUnique({
+  const row = await db.challengeRow.findUnique({
     where: { id },
   });
 
-  if (!row) throw new ValidationError();
-
-  return row;
+  return logic(row);
 };
