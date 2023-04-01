@@ -1,5 +1,5 @@
 import { ErrorRequestHandler } from "express";
-import { ValidationError } from "./client_error";
+import { ValidationError } from "./validation_error";
 import { ZodError } from "zod";
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {

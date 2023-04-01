@@ -1,4 +1,4 @@
-import { ValidationError } from "../../../client_error";
+import { ValidationError } from "../../../validation_error";
 import { logic } from "./logic";
 
 test("Missing challenge throws ValidationError", () => {

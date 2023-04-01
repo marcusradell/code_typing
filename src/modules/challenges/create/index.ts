@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { ValidationError } from "../../../client_error";
+import { ValidationError } from "../../../validation_error";
 import { Db } from "../types";
 import { logic } from "./logic";
 import { Input, inputSchema } from "./input";
