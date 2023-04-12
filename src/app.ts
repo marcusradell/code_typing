@@ -17,10 +17,7 @@ export const appFactory = () => {
 
   const challengeRepository = challengeRepositoryFactory(prismaClient);
 
-  const challengeService = challengeServiceFactory(
-    prismaClient,
-    challengeRepository
-  );
+  const challengeService = challengeServiceFactory(challengeRepository);
 
   challengeControllerFactory(app, challengeService);
 

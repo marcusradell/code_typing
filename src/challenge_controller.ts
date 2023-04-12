@@ -1,13 +1,7 @@
 import { Express } from "express";
-import { v4 } from "uuid";
 import path from "path";
-import { PrismaClient } from "@prisma/client";
-import { ChallengeService, challengeServiceFactory } from "./challenge_service";
+import { ChallengeService } from "./challenge_service";
 import { ValidationError } from "./validation_error";
-import {
-  ChallengeRepository,
-  challengeRepositoryFactory,
-} from "./challenge_repository";
 
 export const challengeControllerFactory = (
   app: Express,

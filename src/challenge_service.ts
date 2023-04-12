@@ -11,7 +11,6 @@ export type ChallengeService = {
 };
 
 export const challengeServiceFactory = (
-  prismaClient: PrismaClient,
   challengeRepository: ChallengeRepository
 ): ChallengeService => {
   return {
