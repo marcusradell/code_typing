@@ -1,5 +1,5 @@
 import { ChallengeRow, PrismaClient } from "@prisma/client";
-import { ChallengeRepository } from "./challenge_repository";
+import { ChallengeRepository } from "../../hexagon/ports/driven/challenge_repository";
 
 export const challengeRepositoryImplFactory = (
   prismaClient: PrismaClient

@@ -1,16 +1,12 @@
 import { Express } from "express";
 import path from "path";
-import { ValidationError } from "./validation_error";
-import { ChallengeService } from "./challenge_service";
+import { ValidationError } from "../../validation_error";
+import { ChallengeService } from "../../hexagon/ports/driver/challenge_service";
 
 export const challengeControllerFactory = (
   app: Express,
   challengeService: ChallengeService
 ) => {
-  app.get("/", (req, res) => {
-    res.sendFile("postman.json", { root: path.resolve(__dirname, "../") });
-  });
-
   app.get("/api/challenges", async (req, res) => {
     res.json(await challengeService.getChallenges());
   });

@@ -1,7 +1,7 @@
-import { ValidationError } from "./validation_error";
+import { ValidationError } from "../../validation_error";
 import { v4 } from "uuid";
-import { ChallengeService } from "./challenge_service";
-import { ChallengeRepository } from "./challenge_repository";
+import { ChallengeService } from "../ports/driver/challenge_service";
+import { ChallengeRepository } from "../ports/driven/challenge_repository";
 
 export const challengeServiceImplFactory = (
   challengeRepository: ChallengeRepository
