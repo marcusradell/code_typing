@@ -49,7 +49,15 @@ export const challengeControllerFactory = (
   app.delete("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
 
-    await challengeService.deleteChallenge(id);
+    try {
+      await challengeService.deleteChallenge(id);
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        res.sendStatus(400);
+      } else {
+        res.sendStatus(500);
+      }
+    }
 
     res.sendStatus(200);
   });
