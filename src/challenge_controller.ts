@@ -36,30 +36,13 @@ export const challengeControllerFactory = (
   app.post("/api/challenges", async (req, res) => {
     try {
       const { name, content } = req.body;
-
-      if (typeof name !== "string" || typeof content !== "string") {
-        return res.sendStatus(400);
-      }
-
-      const today = new Date();
-      const MONDAY = 1;
-      let level = 1;
-
-      if (content.length > 100 && content.includes(";")) {
-        level = 3;
-      } else if (today.getDay() === MONDAY) {
-        level = 2;
-      }
-
-      const id = v4();
-
-      await prismaClient.challengeRow.create({
-        data: { id, name, content, level },
-      });
-
+      const id = await challengeService.createChallenge(name, content);
       res.json({ id });
     } catch (error) {
-      return res.sendStatus(400);
+      if (error instanceof ValidationError) {
+        res.sendStatus(400);
+      }
+      res.sendStatus(500);
     }
   });
 

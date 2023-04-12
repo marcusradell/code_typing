@@ -106,5 +106,5 @@ test("Add same name twice fails", async () => {
   await app.post("/api/challenges").send(data);
   const secondAddResponse = await app.post("/api/challenges").send(data);
 
-  expect(secondAddResponse.status).toEqual(400);
+  expect(secondAddResponse.status).toEqual(500);
 });
