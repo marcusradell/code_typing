@@ -4,6 +4,7 @@ import { challengeControllerFactory } from "./adapters/driver/challenge_controll
 import { challengeRepositoryImplFactory } from "./adapters/driven/challenge_repository_impl";
 import { challengeServiceImplFactory } from "./hexagon/internal/challenge_service_impl";
 import { systemTimeProviderFactory } from "./adapters/driven/system_time_provider";
+import path from "path";
 
 export const appFactory = () => {
   const app = express();
@@ -11,6 +12,10 @@ export const appFactory = () => {
   app.use(express.json());
 
   const prismaClient = new PrismaClient();
+
+  app.get("/", (req, res) => {
+    res.sendFile("postman.json", { root: path.resolve(__dirname, "../") });
+  });
 
   app.head("/status", (req, res) => {
     res.sendStatus(200);
