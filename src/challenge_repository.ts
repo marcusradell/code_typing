@@ -9,7 +9,7 @@ export type ChallengeRepository = {
     content: string;
     level: number;
   }) => Promise<void>;
-  // delete: async () => {},
+  delete: (id: string) => Promise<void>;
 };
 
 export const challengeRepositoryFactory = (
@@ -29,6 +29,8 @@ export const challengeRepositoryFactory = (
         data,
       });
     },
-    // delete: async () => {},
+    delete: async (id) => {
+      await prismaClient.challengeRow.delete({ where: { id } });
+    },
   };
 };

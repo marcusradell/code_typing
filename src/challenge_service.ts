@@ -7,7 +7,7 @@ export type ChallengeService = {
   getChallenges: () => Promise<ChallengeRow[]>;
   getChallenge: (id: string) => Promise<ChallengeRow>;
   createChallenge: (name: string, content: string) => Promise<string>;
-  deleteChallenge: (id: string) => Promise<null>;
+  deleteChallenge: (id: string) => Promise<void>;
 };
 
 export const challengeServiceFactory = (
@@ -55,9 +55,7 @@ export const challengeServiceFactory = (
         throw new ValidationError();
       }
 
-      await prismaClient.challengeRow.delete({ where: { id } });
-
-      return null;
+      await challengeRepository.delete(id);
     },
   };
 };
