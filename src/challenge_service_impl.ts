@@ -3,7 +3,7 @@ import { ValidationError } from "./validation_error";
 import { v4 } from "uuid";
 import { ChallengeRepository } from "./challenge_repository";
 
-export type ChallengeService = {
+export type ChallengeServiceImpl = {
   getChallenges: () => Promise<ChallengeRow[]>;
   getChallenge: (id: string) => Promise<ChallengeRow>;
   createChallenge: (name: string, content: string) => Promise<string>;
@@ -12,7 +12,7 @@ export type ChallengeService = {
 
 export const challengeServiceFactory = (
   challengeRepository: ChallengeRepository
-): ChallengeService => {
+): ChallengeServiceImpl => {
   return {
     getChallenges: async () => {
       return await challengeRepository.getAll();

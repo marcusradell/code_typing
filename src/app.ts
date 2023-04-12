@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import { challengeControllerFactory } from "./challenge_controller";
 import { challengeRepositoryFactory } from "./challenge_repository";
-import { challengeServiceFactory } from "./challenge_service";
+import { challengeServiceFactory } from "./challenge_service_impl";
 
 export const appFactory = () => {
   const app = express();
