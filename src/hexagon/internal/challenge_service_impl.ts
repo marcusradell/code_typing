@@ -2,9 +2,11 @@ import { ValidationError } from "../../validation_error";
 import { v4 } from "uuid";
 import { ChallengeService } from "../ports/driver/challenge_service";
 import { ChallengeRepository } from "../ports/driven/challenge_repository";
+import { TimeProvider } from "../ports/driven/time_provider";
 
 export const challengeServiceImplFactory = (
-  challengeRepository: ChallengeRepository
+  challengeRepository: ChallengeRepository,
+  timeProvider: TimeProvider
 ): ChallengeService => {
   return {
     getChallenges: async () => {
@@ -26,7 +28,7 @@ export const challengeServiceImplFactory = (
         throw new ValidationError();
       }
 
-      const today = new Date();
+      const today = timeProvider.getTime();
       const MONDAY = 1;
       let level = 1;
 
