@@ -21,15 +21,7 @@ export const challengeControllerFactory = (
   app.get("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
 
-    if (typeof id !== "string") {
-      return res.sendStatus(400);
-    }
-
-    const challenge = await prismaClient.challengeRow.findUnique({
-      where: { id },
-    });
-
-    if (!challenge) return res.sendStatus(400);
+    const challenge = await challengeService.getChallenge(id);
 
     res.json(challenge);
   });
