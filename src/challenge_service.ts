@@ -43,6 +43,12 @@ export const challengeServiceFactory = (prismaClient: PrismaClient) => {
 
       return id;
     },
-    deleteChallenge: async () => {},
+    deleteChallenge: async (id: string) => {
+      if (typeof id !== "string") {
+        throw new ValidationError();
+      }
+
+      return await prismaClient.challengeRow.delete({ where: { id } });
+    },
   };
 };
