@@ -2,17 +2,20 @@ import { Express } from "express";
 import { v4 } from "uuid";
 import path from "path";
 import { PrismaClient } from "@prisma/client";
+import { challengeServiceFactory } from "./challenge_service";
 
 export const challengeControllerFactory = (
   app: Express,
   prismaClient: PrismaClient
 ) => {
+  const challengeService = challengeServiceFactory(prismaClient);
+
   app.get("/", (req, res) => {
     res.sendFile("postman.json", { root: path.resolve(__dirname, "../") });
   });
 
   app.get("/api/challenges", async (req, res) => {
-    res.json(await prismaClient.challengeRow.findMany());
+    res.json(await challengeService.getChallenges());
   });
 
   app.get("/api/challenges/:id", async (req, res) => {
