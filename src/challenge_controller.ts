@@ -4,13 +4,16 @@ import path from "path";
 import { PrismaClient } from "@prisma/client";
 import { challengeServiceFactory } from "./challenge_service";
 import { ValidationError } from "./validation_error";
-import { challengeRepositoryFactory } from "./challenge_repository";
+import {
+  ChallengeRepository,
+  challengeRepositoryFactory,
+} from "./challenge_repository";
 
 export const challengeControllerFactory = (
   app: Express,
-  prismaClient: PrismaClient
+  prismaClient: PrismaClient,
+  challengeRepository: ChallengeRepository
 ) => {
-  const challengeRepository = challengeRepositoryFactory(prismaClient);
   const challengeService = challengeServiceFactory(
     prismaClient,
     challengeRepository
