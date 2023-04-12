@@ -4,12 +4,17 @@ import path from "path";
 import { PrismaClient } from "@prisma/client";
 import { challengeServiceFactory } from "./challenge_service";
 import { ValidationError } from "./validation_error";
+import { challengeRepositoryFactory } from "./challenge_repository";
 
 export const challengeControllerFactory = (
   app: Express,
   prismaClient: PrismaClient
 ) => {
-  const challengeService = challengeServiceFactory(prismaClient);
+  const challengeRepository = challengeRepositoryFactory(prismaClient);
+  const challengeService = challengeServiceFactory(
+    prismaClient,
+    challengeRepository
+  );
 
   app.get("/", (req, res) => {
     res.sendFile("postman.json", { root: path.resolve(__dirname, "../") });
