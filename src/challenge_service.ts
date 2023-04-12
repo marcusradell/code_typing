@@ -23,9 +23,7 @@ export const challengeServiceFactory = (
         throw new ValidationError();
       }
 
-      const challenge = await prismaClient.challengeRow.findUnique({
-        where: { id },
-      });
+      const challenge = await challengeRepository.getById(id);
 
       if (!challenge) throw new ValidationError();
 

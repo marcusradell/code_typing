@@ -2,17 +2,23 @@ import { ChallengeRow, PrismaClient } from "@prisma/client";
 
 export type ChallengeRepository = {
   getAll: () => Promise<ChallengeRow[]>;
-  // getById: async () => {},
+  getById: (id: string) => Promise<ChallengeRow | null>;
   // create: async () => {},
   // delete: async () => {},
 };
 
-export const challengeRepositoryFactory = (prismaClient: PrismaClient) => {
+export const challengeRepositoryFactory = (
+  prismaClient: PrismaClient
+): ChallengeRepository => {
   return {
     getAll: async () => {
-      return prismaClient.challengeRow.findMany();
+      return await prismaClient.challengeRow.findMany();
     },
-    // getById: async () => {},
+    getById: async (id: string) => {
+      return await prismaClient.challengeRow.findUnique({
+        where: { id },
+      });
+    },
     // create: async () => {},
     // delete: async () => {},
   };
