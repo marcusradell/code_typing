@@ -3,7 +3,12 @@ import { ChallengeRow, PrismaClient } from "@prisma/client";
 export type ChallengeRepository = {
   getAll: () => Promise<ChallengeRow[]>;
   getById: (id: string) => Promise<ChallengeRow | null>;
-  // create: async () => {},
+  create: (data: {
+    id: string;
+    name: string;
+    content: string;
+    level: number;
+  }) => Promise<void>;
   // delete: async () => {},
 };
 
@@ -19,7 +24,11 @@ export const challengeRepositoryFactory = (
         where: { id },
       });
     },
-    // create: async () => {},
+    create: async (data) => {
+      await prismaClient.challengeRow.create({
+        data,
+      });
+    },
     // delete: async () => {},
   };
 };

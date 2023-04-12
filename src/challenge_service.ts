@@ -46,9 +46,7 @@ export const challengeServiceFactory = (
 
       const id = v4();
 
-      await prismaClient.challengeRow.create({
-        data: { id, name, content, level },
-      });
+      await challengeRepository.create({ id, name, content, level });
 
       return id;
     },
