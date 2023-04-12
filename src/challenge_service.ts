@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { ValidationError } from "./validation_error";
 
 export const challengeServiceFactory = (prismaClient: PrismaClient) => {
   return {
@@ -7,14 +8,14 @@ export const challengeServiceFactory = (prismaClient: PrismaClient) => {
     },
     getChallenge: async (id: string) => {
       if (typeof id !== "string") {
-        throw new Error();
+        throw new ValidationError();
       }
 
       const challenge = await prismaClient.challengeRow.findUnique({
         where: { id },
       });
 
-      if (!challenge) throw new Error();
+      if (!challenge) throw new ValidationError();
 
       return challenge;
     },
