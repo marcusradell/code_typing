@@ -1,37 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Router } from "express";
-import { v4 } from "uuid";
-
-const serviceFactory = (prismaClient: PrismaClient) => {
-  return {
-    getAll: async () => await prismaClient.challengeRow.findMany(),
-    create: async (input: { name: string; content: string }) => {
-      const { name, content } = input;
-
-      if (typeof name !== "string" || typeof content !== "string") {
-        throw new Error("Invalid");
-      }
-
-      const today = new Date();
-      const MONDAY = 1;
-      let level = 1;
-
-      if (content.length > 100 && content.includes(";")) {
-        level = 3;
-      } else if (today.getDay() === MONDAY) {
-        level = 2;
-      }
-
-      const id = v4();
-
-      await prismaClient.challengeRow.create({
-        data: { id, name, content, level },
-      });
-
-      return { id };
-    },
-  };
-};
+import { serviceFactory } from "./service";
 
 export const challengesFactory = (prismaClient: PrismaClient) => {
   const service = serviceFactory(prismaClient);
