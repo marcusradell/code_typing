@@ -2,13 +2,47 @@ import { PrismaClient } from "@prisma/client";
 import { Router } from "express";
 import { v4 } from "uuid";
 
-export const challengesFactory = (prismaClient: PrismaClient) => {
+const serviceFactory = (prismaClient: PrismaClient) => {
   return {
+    getAll: async () => await prismaClient.challengeRow.findMany(),
+    create: async (input: { name: string; content: string }) => {
+      const { name, content } = input;
+
+      if (typeof name !== "string" || typeof content !== "string") {
+        throw new Error("Invalid");
+      }
+
+      const today = new Date();
+      const MONDAY = 1;
+      let level = 1;
+
+      if (content.length > 100 && content.includes(";")) {
+        level = 3;
+      } else if (today.getDay() === MONDAY) {
+        level = 2;
+      }
+
+      const id = v4();
+
+      await prismaClient.challengeRow.create({
+        data: { id, name, content, level },
+      });
+
+      return { id };
+    },
+  };
+};
+
+export const challengesFactory = (prismaClient: PrismaClient) => {
+  const service = serviceFactory(prismaClient);
+
+  return {
+    service,
     routerFactory: () => {
       const router = Router();
 
       router.get("/", async (req, res) => {
-        res.json(await prismaClient.challengeRow.findMany());
+        res.json(await service.getAll());
       });
 
       router.get("/:id", async (req, res) => {
@@ -29,29 +63,7 @@ export const challengesFactory = (prismaClient: PrismaClient) => {
 
       router.post("/", async (req, res) => {
         try {
-          const { name, content } = req.body;
-
-          if (typeof name !== "string" || typeof content !== "string") {
-            return res.sendStatus(400);
-          }
-
-          const today = new Date();
-          const MONDAY = 1;
-          let level = 1;
-
-          if (content.length > 100 && content.includes(";")) {
-            level = 3;
-          } else if (today.getDay() === MONDAY) {
-            level = 2;
-          }
-
-          const id = v4();
-
-          await prismaClient.challengeRow.create({
-            data: { id, name, content, level },
-          });
-
-          res.json({ id });
+          res.json(service.create(req.body));
         } catch (error) {
           return res.sendStatus(400);
         }
